@@ -160,13 +160,6 @@ define(function (require, exports, module) {
         return;
       }
 
-      var ieVersion = this.getIEVersion();
-
-      // IE9和IE10不设置最小高度
-      if(ieVersion === 9 || ieVersion === 10){
-        return;
-      }
-
       if ($setContainer && $setContainer.length > 0) {
         var $window = $(window);
         var windowHeight = $window.height();
