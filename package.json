@@ -1,0 +1,40 @@
+{
+  "name": "webapp",
+  "version": "1.0.0",
+  "description": "Single page application using jQuery",
+  "dependencies": {
+    "gulp-concat": "^2.6.0"
+  },
+  "devDependencies": {
+    "amd-optimize": "^0.6.1",
+    "babel-eslint": "^5.0.0",
+    "del": "^2.2.0",
+    "eslint": "^2.3.0",
+    "estraverse-fb": "^1.3.1",
+    "gulp": "^3.9.1",
+    "gulp-add-src": "^0.2.0",
+    "gulp-compressor": "^0.1.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-connect": "^2.3.1",
+    "gulp-edit": "0.0.1",
+    "gulp-eslint": "^2.0.0",
+    "gulp-minify-css": "^1.2.4",
+    "gulp-modify": "^0.1.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-replace": "^0.5.4",
+    "gulp-requirejs": "^0.1.3",
+    "gulp-requirejs-optimize": "^0.3.2",
+    "gulp-sequence": "^0.4.5",
+    "gulp-uglify": "^1.5.3",
+    "gulp-zip": "^3.2.0",
+    "hogan.js": "^3.0.2",
+    "log4js": "^0.6.33",
+    "merge2": "^1.0.1",
+    "run-sequence": "^1.1.5"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "wisedu-fe",
+  "license": "MIT"
+}

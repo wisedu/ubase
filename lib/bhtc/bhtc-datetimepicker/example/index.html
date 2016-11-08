@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" media="screen"
+          href="http://res.wisedu.com/fe_components/jqwidget/blue/bh.css">
+    <link rel="stylesheet" type="text/css" media="screen"
+          href="http://res.wisedu.com/fe_components/iconfont/iconfont.css">
+    <link href="../css/blue/bhtc-datetimepicker.css" rel="stylesheet">
+    <script src="http://res.wisedu.com/fe_components/jquery-1.11.3.js"></script>
+    <script src="http://res.wisedu.com/fe_components/bhtc/moment/min/moment-with-locales.min.js"></script>
+    <script src="../js/bhtc-datetimepicker.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class='col-sm-6'>
+            <h4>依赖js</h4>
+            <div>http://res.wisedu.com/fe_components/jquery-1.11.3.js</div>
+            <div>http://res.wisedu.com/fe_components/bhtc/moment/min/moment-with-locales.min.js</div>
+            <div>http://res.wisedu.com/fe_components/bhtc/bhtc-datetimepicker/js/bhtc-datetimepicker.js</div>
+
+            <h4>依赖css</h4>
+            <div>http://res.wisedu.com/fe_components/jqwidget/blue/bh.min.css</div>
+            <div>http://res.wisedu.com/fe_components/iconfont/iconfont.css</div>
+            <div>http://res.wisedu.com/fe_components/bhtc/bhtc-datetimepicker/css/blue/bhtc-datetimepicker.css</div>
+
+            <h4>html结构示例和初始化</h4>
+            <textarea style="width: 470px;height: 210px;">
+                <div class='bhtc-input-group' >
+                    <input id='datetimepicker' type='text' class="bh-form-control"/>
+                    <span class="bhtc-input-group-addon">
+                        <i class="iconfont icon-daterange"></i>
+                    </span>
+                </div>
+
+                $('#datetimepicker').datetimepicker();
+            </textarea>
+
+
+
+            <div class="form-group" style="width: 400px;">
+                默认配置
+                <div class='bhtc-input-group bh-mb-16' >
+                    <input id='datetimepicker1' type='text' class="bh-form-control"/>
+                    <span class="bhtc-input-group-addon">
+                        <i class="iconfont icon-daterange"></i>
+                    </span>
+                </div>
+
+                选择年
+                <div class='bhtc-input-group bh-mb-16'>
+                    <input id='datetimepicker2' type='text' class="bh-form-control"/>
+                    <span class="bhtc-input-group-addon">
+                        <i class="iconfont icon-daterange"></i>
+                    </span>
+                </div>
+
+                选择月
+                <div class='bhtc-input-group bh-mb-16'>
+                    <input id='datetimepicker3' type='text' class="bh-form-control"/>
+                    <span class="bhtc-input-group-addon">
+                        <i class="iconfont icon-daterange"></i>
+                    </span>
+                </div>
+
+                选择日
+                <div class='bhtc-input-group bh-mb-16'>
+                    <input id='datetimepicker4' type='text' class="bh-form-control"/>
+                    <span class="bhtc-input-group-addon">
+                        <i class="iconfont icon-daterange"></i>
+                    </span>
+                </div>
+
+                选择时
+                <div class='bhtc-input-group bh-mb-16'>
+                    <input id='datetimepicker5' type='text' class="bh-form-control"/>
+                    <span class="bhtc-input-group-addon">
+                        <i class="iconfont icon-daterange"></i>
+                    </span>
+                </div>
+
+                设定日期范围
+                <div class='bhtc-input-group bh-mb-16'>
+                    <input id='datetimepicker6' type='text' class="bh-form-control"/>
+                    <span class="bhtc-input-group-addon">
+                        <i class="iconfont icon-daterange"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            $(function () {
+//                默认配置
+                $('#datetimepicker1').datetimepicker({
+//                    debug: true
+                });
+
+//                选择年
+                $('#datetimepicker2').datetimepicker({
+//                    debug: true,
+                    viewMode: 'years',
+                    format: 'YYYY'
+                });
+
+//                选择月
+                $('#datetimepicker3').datetimepicker({
+//                    debug: true,
+                    viewMode: 'months',
+                    format: 'YYYY/MM'
+                });
+
+//                选择日
+                $('#datetimepicker4').datetimepicker({
+//                    debug: true
+                });
+
+//                选择时
+                $('#datetimepicker5').datetimepicker({
+//                    debug: true,
+                    format: 'LT'
+                });
+
+//                设定日期范围
+                $('#datetimepicker6').datetimepicker({
+//                    debug: true,
+                    minDate: '2016/6/5',
+                    maxDate: '2016/7/27'
+                });
+            });
+        </script>
+    </div>
+</div>
+
+
+</body>
+</html>
