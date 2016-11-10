@@ -30,11 +30,15 @@ define(function(require, exports, module) {
       if (innerIndexMode) {
         url = '.' + url;
       }
+
+      var appVersion = utils.getConfig('APP_VERSION') || utils.getConfig('STATIC_TIMESTAMP') || '30000';
+
+      url = url + '?av=' + appVersion;
+
       $.ajax({
         url: url,
         dataType: 'html',
-        async: false,
-        cache: false
+        async: false
       }).done(function(res) {
         html = res;
       });
