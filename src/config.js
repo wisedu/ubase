@@ -4,6 +4,7 @@ define(function(require, exports, module) {
         "RESOURCE_VERSION": '100003',
         "PUBLIC_CSS": [
             '/fe_components/iconfont/iconfont.css',
+            '/fe_components/iconfont_2.0/iconfont.css',
             '/fe_components/jqwidget/{{theme}}/bh{{version}}.min.css',
             '/fe_components/jqwidget/{{theme}}/bh-scenes{{version}}.min.css',
             '/bower_components/animate.css/animate.min.css',
