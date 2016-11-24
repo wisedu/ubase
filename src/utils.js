@@ -197,6 +197,10 @@ define(function(require, exports, module) {
 
     },
 
+    go: function (path, blank) {
+      utils.goto(path, blank)
+    },
+
     getPureRoute: function(route) {
       return route.indexOf('/') > 0 ? route.substr(0, route.indexOf('/')) : route;
     },
