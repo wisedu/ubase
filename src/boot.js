@@ -151,7 +151,7 @@ define(function(require, exports, module) {
       }
 
       if (releaseMode && !consoleDebug) {
-        loadCss((innerIndexMode ? '.' : '') + './dest/all.css?av' + appVersion);
+        loadCss((innerIndexMode ? '.' : '') + './public/build/all.css?av' + appVersion);
         return;
       }
 
@@ -220,7 +220,7 @@ define(function(require, exports, module) {
       }
 
       if (releaseMode && !consoleDebug) {
-        deps.push('./dest/package.js');
+        deps.push('./public/build/package.js');
       }
 
       return deps;
