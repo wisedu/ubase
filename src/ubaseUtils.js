@@ -88,6 +88,7 @@ define(function (require, exports, module) {
       var modules = this.getModules() || [];
       var appEntry = ubaseUtils.getFirstModules();
       var appTitle = utils.getConfig('APP_TITLE');
+      var useDefaultAvatar = utils.getConfig('USE_DEFAULT_AVATAR');
 
       var nav = [];
 
@@ -137,12 +138,14 @@ define(function (require, exports, module) {
         headerData['logo'] = utils.getConfig('RESOURCE_SERVER') + '/images/logo.png';
       }
 
-      if (!headerData['userImage']) {
-        headerData['userImage'] = utils.getConfig('RESOURCE_SERVER') + '/images/user.png';
-      }
+      if(useDefaultAvatar === true || useDefaultAvatar === undefined){
+        if (!headerData['userImage']) {
+          headerData['userImage'] = utils.getConfig('RESOURCE_SERVER') + '/images/user.png';
+        }
 
-      if (headerData['userInfo'] && !headerData['userInfo']['image']) {
-        headerData['userInfo']['image'] = utils.getConfig('RESOURCE_SERVER') + '/images/user.png';
+        if (headerData['userInfo'] && !headerData['userInfo']['image']) {
+          headerData['userInfo']['image'] = utils.getConfig('RESOURCE_SERVER') + '/images/user.png';
+        }
       }
 
       $('body').children('header').bhHeader(headerData);
