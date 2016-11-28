@@ -1,21 +1,19 @@
 require([], function() {
   var req = require;
   $(function() {
-    if (!window.APP_CONFIG) {
       req(
-        [
-          './config'
-        ],
-        function(config) {
-          window.APP_CONFIG = config;
-          startBoot();
-        }
+          [
+              './config'
+          ],
+          function(config) {
+              window.APP_CONFIG = $.extend({}, window.APP_CONFIG, config);
+              startBoot();
+          },
+          function () {
+              startBoot()
+          }
       );
-    } else {
-      startBoot();
-    }
   })
-
 
   function startBoot() {
     require(['boot', 'utils', 'text'], function(boot, utils) {
