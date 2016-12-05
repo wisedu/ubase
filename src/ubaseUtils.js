@@ -41,6 +41,7 @@ define(function (require, exports, module) {
 
     cleanMainArea: function () {
       $('body>main').empty();
+      $('.bh-bhdialog-container').remove()
     },
 
     /**
