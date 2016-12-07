@@ -13,15 +13,13 @@ define(function(require, exports, module) {
 
         "PUBLIC_BASE_JS": [
             '/fe_components/bh_utils.js',
-            '/fe_components/emap{{version}}.js',
-            '/fe_components/amp/ampPlugins.min.js'
+            '/fe_components/amp/ampPlugins.min.js',
+            '/fe_components/jqwidget/jqxwidget.min.js'
         ],
 
         "PUBLIC_NORMAL_JS": [
-            // '/fe_components/bhtc/moment/min/moment-with-locales.min.js',
-            // '/fe_components/bhtc/bhtc-datetimepicker/js/bhtc-datetimepicker.js',
             '/fe_components/bh{{version}}.min.js',
-            '/fe_components/jqwidget/jqxwidget.min.js'
+            '/fe_components/emap{{version}}.js'
         ],
 
         "DEBUG_JS": [
