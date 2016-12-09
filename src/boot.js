@@ -15,6 +15,7 @@ define(function (require, exports, module) {
             var demoMode = utils.getConfig('DEMO_MODE');
             var modules = ubaseUtils.getSortedModules();
             var appEntry = ubaseUtils.getFirstModules();
+            var ieVersion = ubaseUtils.getIEVersion()
 
             if (!cdn) {
                 log.error('config中RESOURCE_SERVER配置不能为空！');
@@ -78,6 +79,9 @@ define(function (require, exports, module) {
                                     })();
                                 }
                                 ubaseUtils.initFramework();
+                                if(ieVersion === 9){
+                                    $('.app-loading').remove()
+                                }
                                 self.afterFrameworkInit();
                                 router.init('/' + appEntry);
                             });
