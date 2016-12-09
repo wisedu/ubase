@@ -20,7 +20,8 @@ define(function(require, exports, module) {
 
         "PUBLIC_NORMAL_JS": [
             '/fe_components/bh{{version}}.min.js',
-            '/fe_components/emap{{version}}.js'
+            '/fe_components/emap{{version}}.js',
+            '/fe_components/sentry/sentry.min.js'
         ],
 
         "DEBUG_JS": [
