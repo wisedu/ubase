@@ -246,10 +246,6 @@ define(function(require, exports, module) {
         },
         error: function(resp) {
           $(".app-ajax-loading").jqxLoader('close');
-          var result = JSON.parse(resp.responseText);
-          if (typeof result.loginURL != 'undefined' && resp.loginURL != '') {
-            window.location.href = result.loginURL;
-          }
           deferred.reject(resp);
         }
       });
