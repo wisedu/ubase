@@ -15,7 +15,8 @@ define(function(require, exports, module) {
             '/fe_components/bh_utils.js',
             '/fe_components/amp/ampPlugins.min.js',
             '/fe_components/jqwidget/jqxwidget.min.js',
-            '/fe_components/bhtc/moment/min/moment-with-locales.min.js'
+            '/fe_components/bhtc/moment/min/moment-with-locales.min.js',
+            '/fe_components/bhtc/sortable/Sortable.js'
         ],
 
         "PUBLIC_NORMAL_JS": [
