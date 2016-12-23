@@ -179,6 +179,7 @@ http://res.wisedu.com/FE/HRMS/个人填报单页版/index.html?min=1#/txsbb
     "APP_TITLE": "教职工招聘审核", // APP标题
     "FOOTER_TEXT": "", // 应用底部说明文本
     "APP_VERSION": "", // app的版本号 防止前端业务js和html文件缓存
+    "SERVER_CONFIG_API": "", // 服务器端生成配置的api 返回的数据会覆盖config.js中相同的配置项
     "MODULES": [{ // 需要展示的模块
         title: "体检管理", // 模块名称
         route: "tjgl",// 模块路由 url和route二选一
