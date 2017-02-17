@@ -198,6 +198,10 @@ define(function (require, exports, module) {
       var userParams = this.getUserParams();
       ubaseUtils.hideLoading();
       ubaseUtils.getFixedMainLayout();
+      //2017-2-16 解决加载慢的时候，头未被及时隐藏的问题
+      if (miniMode || userParams['min'] == '1') {
+        utils.miniMode();
+      }
       ubaseUtils.renderHeader();
       ubaseUtils.initFooter();
       ubaseUtils.resetJqueryHtmlMethod();
@@ -205,7 +209,8 @@ define(function (require, exports, module) {
       //ubaseUtils.autoRefreshAuthButton();
       utils.setHeaderCount(headerCount);
       if (miniMode || userParams['min'] == '1') {
-        utils.miniMode();
+        //2017-2-16 解决加载慢的时候，头未被及时隐藏的问题
+        // utils.miniMode();
       } else {
         ubaseUtils.initEvaluate();
       }
