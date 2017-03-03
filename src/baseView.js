@@ -85,8 +85,8 @@ define(function(require, exports, module) {
       }
 
       subViewConfig.$rootElement = self.$rootElement;
-      subViewConfig.initialize = function(params) {
-        subViewConfig.realInit(params);
+      subViewConfig.initialize = function(a, b, c, d, e, f, g) {
+        subViewConfig.realInit(a, b, c, d, e, f, g);
         if (subViewConfig.__eventBinded) {
           return;
         } else {
