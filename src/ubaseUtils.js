@@ -199,9 +199,6 @@ define(function (require, exports, module) {
       var userParams = this.getUserParams();
       ubaseUtils.hideLoading();
       ubaseUtils.getFixedMainLayout();
-      if(hideNav){
-        $('.bh-headerBar-navigate').hide()
-      }
       //2017-2-16 解决加载慢的时候，头未被及时隐藏的问题
       if (miniMode || userParams['min'] == '1') {
         utils.miniMode();
@@ -212,6 +209,9 @@ define(function (require, exports, module) {
       ubaseUtils.resetHoganRenderMethod();
       //ubaseUtils.autoRefreshAuthButton();
       utils.setHeaderCount(headerCount);
+      if(hideNav){
+        $('.bh-headerBar-navigate').hide();
+      }
       if (miniMode || userParams['min'] == '1') {
         //2017-2-16 解决加载慢的时候，头未被及时隐藏的问题
         // utils.miniMode();
