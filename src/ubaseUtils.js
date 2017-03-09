@@ -193,11 +193,15 @@ define(function (require, exports, module) {
 
     initFramework: function () {
       var miniMode = utils.getConfig('MINI_MODE');
+        var hideNav = utils.getConfig('HIDE_NAV');
       var headerCount = utils.getConfig('HEADER_COUNT');
       var bodyNiceScroll = utils.getConfig('NICESCROLL');
       var userParams = this.getUserParams();
       ubaseUtils.hideLoading();
       ubaseUtils.getFixedMainLayout();
+      if(hideNav){
+        $('.bh-headerBar-navigate').hide()
+      }
       //2017-2-16 解决加载慢的时候，头未被及时隐藏的问题
       if (miniMode || userParams['min'] == '1') {
         utils.miniMode();

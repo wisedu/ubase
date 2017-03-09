@@ -180,6 +180,8 @@ http://res.wisedu.com/FE/HRMS/个人填报单页版/index.html?min=1#/txsbb
     "FOOTER_TEXT": "", // 应用底部说明文本
     "APP_VERSION": "", // app的版本号 防止前端业务js和html文件缓存
     "SERVER_CONFIG_API": "", // 服务器端生成配置的api 返回的数据会覆盖config.js中相同的配置项
+    "MINI_MODE": true, // 只显示主体部分内容， 去除页头和页脚 默认false
+    "HIDE_NAV":true, // 隐藏导航菜单 默认false
     "MODULES": [{ // 需要展示的模块
         title: "体检管理", // 模块名称
         route: "tjgl",// 模块路由 url和route二选一
