@@ -414,6 +414,11 @@ define(function(require, exports, module) {
       }
       options.buttons = options.buttonList || buttonList;
 
+      //qiyu 2017-3-21 type会作为dialog的背景颜色，传递confirm导致对话框背景无颜色
+      if(type == 'confirm') {
+        options.type = "warning";
+      }
+
       $.bhDialog(options);
     },
 
