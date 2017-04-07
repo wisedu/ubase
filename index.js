@@ -9,7 +9,8 @@ require([], function() {
               window.APP_CONFIG = $.extend({}, window.APP_CONFIG, config);
               startBoot();
           },
-          function () {
+          function (error) {
+              console && console.log(error)
               startBoot()
           }
       );
