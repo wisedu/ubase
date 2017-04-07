@@ -3,6 +3,7 @@ define(function(require, exports, module) {
   var utils = require('utils');
   var ubaseUtils = require('ubaseUtils');
   var log = require('log');
+  var _lastView = null
 
   var viewCore = function() {
     this.$rootElement = $('body>main');
@@ -85,8 +86,8 @@ define(function(require, exports, module) {
       }
 
       subViewConfig.$rootElement = self.$rootElement;
-      subViewConfig.initialize = function(params) {
-        subViewConfig.realInit(params);
+      subViewConfig.initialize = function(a, b, c, d, e, f, g) {
+        subViewConfig.realInit(a, b, c, d, e, f, g);
         if (subViewConfig.__eventBinded) {
           return;
         } else {
@@ -145,9 +146,22 @@ define(function(require, exports, module) {
       app.eventMap = app.eventMap();
     }
   }
+  
+  function clearSubViewInfo(view) {
+    var subview = view._subView
+      view._subView = []
+      _.each(subview, function (sub) {
+          clearSubViewInfo(sub)
+      })
+  }
 
   function baseView(config, path) {
-    var app = new viewCore();
+      var app = new viewCore();
+    if(_lastView){
+      clearSubViewInfo(_lastView)
+    }
+
+    _lastView = app
     app._routerParams = path;
     $.extend(app, config);
     app._originUserConfig = config;

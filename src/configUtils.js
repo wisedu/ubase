@@ -100,5 +100,9 @@ define(function(require, exports, module) {
     config.CONFIG_READY(config);
   }
 
+  // 尝试读取平台的logo做为默认logo图片
+  if (platformConfig && platformConfig.logoRootUrl) {
+    config['HEADER'].logo = platformConfig.rootPath + platformConfig.logoRootUrl + platformConfig.logo.normal;
+  }
   return config;
 });
