@@ -40,9 +40,11 @@ define(function(require, exports, module) {
         dataType: 'html',
         async: false
       }).done(function(res) {
+        console.log(res)
         html = res;
       });
-
+      在渲染模板之前需要先进行国际化内容处理
+      html = this.i18n(html)
       return Hogan.compile(html);
     },
 
@@ -446,6 +448,26 @@ define(function(require, exports, module) {
 
       return BH_UTILS.bhWindow(content, title, btns, params, callback);
     },
+
+    i18n: function (html) {
+      html = html.replace(/\{\{i18n:\S+\}\}/, function (match) {
+        var matchResult = match.match(/\{\{i18n:(\S+)\}\}/)[1]
+        var defaultText = '' // i18n 字典中无匹配结果时，显示的默认值
+        var key = ''
+        var result = '' // 匹配结果
+        if (matchResult.indexOf('|') > -1) {
+          key = matchResult.split('|')[0]
+          defaultText = matchResult.split('|')[1]
+        } else {
+          key = defaultText = matchResult
+        }
+        result = $.i18n(key)
+        if (result === key && defaultText !== '') {
+          result = defaultText
+        }
+        return result
+      })
+    }
 
   };
 
