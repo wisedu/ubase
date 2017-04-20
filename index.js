@@ -6,7 +6,7 @@ require([], function() {
               './config'
           ],
           function(config) {
-              window.APP_CONFIG = $.extend({}, window.APP_CONFIG, config);
+              window.APP_CONFIG = $.extend(true, {}, window.APP_CONFIG, config);
               startBoot();
           },
           function (error) {
