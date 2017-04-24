@@ -454,11 +454,17 @@ define(function(require, exports, module) {
         //  bh_aq_search: 从{1}中搜索{2}
         // }
         i18n: function(html) {
-            html = html.replace(/\{\{i18n:\S+\}\}/, function(match) {
-                var matchResult = match.match(/\{\{i18n:(\S+)\}\}/)[1]
+            return html.replace(/i18n\(\S+\)/, function(match) {
+                var matchResult = match.match(/i18n\((\S+)\)/)[1]
                 var defaultText = '' // i18n 字典中无匹配结果时，显示的默认值
                 var key = ''
                 var result = '' // 匹配结果
+                var params = []
+                // 判断是否带参数
+                if (matchResult.indexOf(',') > -1) {
+                    params = matchResult.split(',')
+                    matchResult = params.splice(0, 1)[0]
+                }
                 if (matchResult.indexOf('|') > -1) {
                     key = matchResult.split('|')[0]
                     defaultText = matchResult.split('|')[1]
@@ -469,12 +475,12 @@ define(function(require, exports, module) {
                 //判断匹配到的值是否含有{}
                 var checkTemp = result.match(/(\{\d+\}?)/);
                 if (checkTemp !== null) {
-                    var queue = matchResult.split(',');
-                    queue.shift();
+                    // var queue = matchResult.split(',');
+                    // queue.shift();
                     var temp = str;
                     for (var i = 0; i < checkTemp.length; i++) {
-                        if (queue[i] !== undefined) {
-                            temp = temp.replace(checkTemp[i], queue[i]);
+                        if (params[i] !== undefined) {
+                            temp = temp.replace(new RegExp(checkTemp[i], 'g'), params[i]);
                         }
                     }
                     result= temp;
@@ -482,6 +488,7 @@ define(function(require, exports, module) {
                 if (result === key && defaultText !== '') {
                     result = defaultText
                 }
+                console.log(result)
                 return result
             })
         }
