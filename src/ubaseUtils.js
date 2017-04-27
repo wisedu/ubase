@@ -137,7 +137,7 @@ define(function (require, exports, module) {
 
       if (!headerData['logo']) {
         // headerData['logo'] = utils.getConfig('RESOURCE_SERVER') + '/images/logo.png';
-        headerData['logo'] = utils.getConfig('RESOURCE_SERVER') + '/config_local/logo.png';
+        headerData['logo'] = utils.getConfig('RESOURCE_SERVER') + '/fe_components/config_local/logo.png';
       }
 
       if(useDefaultAvatar === true || useDefaultAvatar === undefined){
