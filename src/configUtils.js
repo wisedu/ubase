@@ -1,4 +1,4 @@
-define(function(require, exports, module) {
+define(function (require, exports, module) {
 
   var config = window.APP_CONFIG;
   var serverConfig = {};
@@ -9,10 +9,10 @@ define(function(require, exports, module) {
     ajax({
       url: config.SERVER_CONFIG_API,
       async: false,
-      success: function(response) {
+      success: function (response) {
         serverConfig = JSON.parse(response)
       },
-      fail: function(status) {
+      fail: function (status) {
         console.error('AJAX SERVER_CONFIG_API ERROR');
       }
     });
@@ -34,7 +34,7 @@ define(function(require, exports, module) {
     }
 
     //接收 - 第三步
-    xhr.onreadystatechange = function() {
+    xhr.onreadystatechange = function () {
       if (xhr.readyState == 4) {
         var status = xhr.status;
         if (status >= 200 && status < 300) {
@@ -61,7 +61,7 @@ define(function(require, exports, module) {
     }
   }
 
-  function getCookie (c_name) {
+  function getCookie(c_name) {
     var c_start, c_end;　　　
     if (document.cookie.length > 0) {　　　　　　　　
       c_start = document.cookie.indexOf(c_name + "=");　　　　　　　　
@@ -94,7 +94,7 @@ define(function(require, exports, module) {
   // var newSkin = localStorage.getItem("skinName");
   var newSkin = getCookie("THEME");
   if (platformConfig) {
-    if (typeof(platformConfig) == 'string') {
+    if (typeof (platformConfig) == 'string') {
       platformConfig = JSON.parse(platformConfig);
     }
     if (platformConfig.footer && platformConfig.footer.normal) {
@@ -109,32 +109,36 @@ define(function(require, exports, module) {
       config['APP_INFO_ROOT_PATH'] = platformConfig.rootPath;
     }
   } else {
-    // 门户和应用分域名部署时，取不到配置的cookie，则请求res上的静态配置文件
-     ajax({
-      url: config.RESOURCE_SERVER + '/config_local/config.json',
-      async: false,
-      success: function(response) {
-        try {
-          serverConfig = JSON.parse(response)
-        } catch (e) {
-          console && console.error('无效的res config')
-          console && cosnole.log(response)
-        } 
-        response = response || {}
-        config['FOOTER_TEXT'] = response['FOOTER_TEXT']
-        config['THEME'] = response['THEME']
-        config['APP_INFO_ROOT_PATH'] = response['APP_INFO_ROOT_PATH'];
-      },
-      fail: function(status) {
-        console.error('AJAX RES CONFIG ERROR');
-      }
-    });
+    try {
+      // 门户和应用分域名部署时，取不到配置的cookie，则请求res上的静态配置文件
+      ajax({
+        url: config.RESOURCE_SERVER + '/fe_components/config_local/config.json',
+        async: false,
+        success: function (response) {
+          try {
+            serverConfig = JSON.parse(response)
+          } catch (e) {
+            console && console.error('无效的res config')
+            console && cosnole.log(response)
+          }
+          serverConfig = serverConfig || {}
+          config['FOOTER_TEXT'] = serverConfig['FOOTER_TEXT']
+          config['THEME'] = serverConfig['THEME']
+          config['APP_INFO_ROOT_PATH'] = serverConfig['APP_INFO_ROOT_PATH'];
+        },
+        fail: function (status) {
+          console && console.error('AJAX 获取 RES 配置信息失败');
+        }
+      });
+    } catch(e) {
+      console && console.error('AJAX 获取 RES 配置信息失败');
+    }
   }
 
-  if(newSkin){
+  if (newSkin) {
     config['THEME'] = newSkin;
   }
-  if(config.CONFIG_READY){
+  if (config.CONFIG_READY) {
     config.CONFIG_READY(config);
   }
 
