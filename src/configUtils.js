@@ -26,11 +26,25 @@ define(function (require, exports, module) {
     options.dataType = options.dataType || "json";
     var params = formatParams(options.url, options.data);
 
+    var isCrossorigin = (function() {
+      if (/^(http:\/\/|https:\/\/)/.test(options.url)) {
+        var match = options.url.match(/^((http:\/\/|https:\/\/)[^/]+)\/*/)
+        if (match[1]) {
+          return match[1] != location.protocol + location.host + location.port
+        }
+      }
+      return false
+    })()
+
     //创建 - 非IE6 - 第一步
-    if (window.XMLHttpRequest) {
+    if (window.XMLHttpRequest && document.documentMode != 9) {
       var xhr = new XMLHttpRequest();
     } else { //IE6及其以下版本浏览器
-      var xhr = new ActiveXObject('Microsoft.XMLHTTP');
+      if (isCrossorigin) {
+        var xhr = new XDomainRequest()
+      } else {
+        var xhr = new ActiveXObject('Microsoft.XMLHTTP');
+      }
     }
 
     //接收 - 第三步
