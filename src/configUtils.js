@@ -1,4 +1,4 @@
-define(function(require, exports, module) {
+define(function (require, exports, module) {
 
   var config = window.APP_CONFIG;
   var serverConfig = {};
@@ -9,10 +9,10 @@ define(function(require, exports, module) {
     ajax({
       url: config.SERVER_CONFIG_API,
       async: false,
-      success: function(response) {
+      success: function (response) {
         serverConfig = JSON.parse(response)
       },
-      fail: function(status) {
+      fail: function (status) {
         console.error('AJAX SERVER_CONFIG_API ERROR');
       }
     });
@@ -26,15 +26,29 @@ define(function(require, exports, module) {
     options.dataType = options.dataType || "json";
     var params = formatParams(options.url, options.data);
 
+    var isCrossorigin = (function() {
+      if (/^(http:\/\/|https:\/\/)/.test(options.url)) {
+        var match = options.url.match(/^((http:\/\/|https:\/\/)[^/]+)\/*/)
+        if (match[1]) {
+          return match[1] != location.protocol + location.host + location.port
+        }
+      }
+      return false
+    })()
+
     //创建 - 非IE6 - 第一步
-    if (window.XMLHttpRequest) {
+    if (window.XMLHttpRequest && document.documentMode != 9) {
       var xhr = new XMLHttpRequest();
     } else { //IE6及其以下版本浏览器
-      var xhr = new ActiveXObject('Microsoft.XMLHTTP');
+      if (isCrossorigin) {
+        var xhr = new XDomainRequest()
+      } else {
+        var xhr = new ActiveXObject('Microsoft.XMLHTTP');
+      }
     }
 
     //接收 - 第三步
-    xhr.onreadystatechange = function() {
+    xhr.onreadystatechange = function () {
       if (xhr.readyState == 4) {
         var status = xhr.status;
         if (status >= 200 && status < 300) {
@@ -60,6 +74,21 @@ define(function(require, exports, module) {
       xhr.send(params);
     }
   }
+
+  function getCookie(c_name) {
+    var c_start, c_end;　　　
+    if (document.cookie.length > 0) {　　　　　　　　
+      c_start = document.cookie.indexOf(c_name + "=");　　　　　　　　
+      if (c_start != -1) {　　　　　　　　
+        c_start = c_start + c_name.length + 1;　　　　　　　　　　
+        c_end = document.cookie.indexOf(";", c_start);　　　　　　　　　　
+        if (c_end == -1) c_end = document.cookie.length;　　　　　　　　　　
+        return decodeURI(document.cookie.substring(c_start, c_end));　　　　　　　　
+      }　　　　
+    }　　　　
+    return "";　　
+  }
+
   //格式化参数
   function formatParams(url, data) {
     var arr = [];
@@ -75,9 +104,11 @@ define(function(require, exports, module) {
   }
 
   var platformConfig = localStorage.getItem("schoolConfig");
-  var newSkin = localStorage.getItem("skinName");
+  // 个人配色方案改为从cookie中获取
+  // var newSkin = localStorage.getItem("skinName");
+  var newSkin = getCookie("THEME");
   if (platformConfig) {
-    if (typeof(platformConfig) == 'string') {
+    if (typeof (platformConfig) == 'string') {
       platformConfig = JSON.parse(platformConfig);
     }
     if (platformConfig.footer && platformConfig.footer.normal) {
@@ -91,12 +122,37 @@ define(function(require, exports, module) {
     if (platformConfig.rootPath) {
       config['APP_INFO_ROOT_PATH'] = platformConfig.rootPath;
     }
+  } else {
+    try {
+      // 门户和应用分域名部署时，取不到配置的cookie，则请求res上的静态配置文件
+      ajax({
+        url: config.RESOURCE_SERVER + '/fe_components/config_local/config.json',
+        async: false,
+        success: function (response) {
+          try {
+            serverConfig = JSON.parse(response)
+          } catch (e) {
+            console && console.error('无效的res config')
+            console && cosnole.log(response)
+          }
+          serverConfig = serverConfig || {}
+          config['FOOTER_TEXT'] = serverConfig['FOOTER_TEXT']
+          config['THEME'] = serverConfig['THEME']
+          config['APP_INFO_ROOT_PATH'] = serverConfig['APP_INFO_ROOT_PATH'];
+        },
+        fail: function (status) {
+          console && console.error('AJAX 获取 RES 配置信息失败');
+        }
+      });
+    } catch(e) {
+      console && console.error('AJAX 获取 RES 配置信息失败');
+    }
   }
 
-  if(newSkin){
+  if (newSkin) {
     config['THEME'] = newSkin;
   }
-  if(config.CONFIG_READY){
+  if (config.CONFIG_READY) {
     config.CONFIG_READY(config);
   }
 
