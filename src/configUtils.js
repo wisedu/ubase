@@ -28,9 +28,9 @@ define(function (require, exports, module) {
 
     var isCrossorigin = (function() {
       if (/^(http:\/\/|https:\/\/)/.test(options.url)) {
-        var match = options.url.match(/^((http:\/\/|https:\/\/)[^/]+)\/*/)
+        var match = options.url.match(/^((http:\/\/|https:\/\/)[^/|^:]+)\/*/)
         if (match[1]) {
-          return match[1] != location.protocol + location.host + location.port
+          return match[1] != location.protocol + '//' + location.host
         }
       }
       return false
