@@ -458,8 +458,33 @@ define(function(require, exports, module) {
                 var matchResult = match.match(/i18n\((\S+)\)/)[1]
                 return BH_UTILS.i18n(matchResult)
             })
-        }
+        },
 
+        /**
+         * getLangResource
+         * 获取语言资源
+         * @return {[type]} [description]
+         */
+        getLangResource: function() {
+            var paths = location.pathname.split('/');
+            var appName = paths[paths.indexOf('sys') + 1];
+            var ctx = paths[1];
+            var uri = ctx + '/i18n.do';
+            return this.doAjax(uri, { appName: appName }).always(function(resp) {
+                if (resp.code === '0' && resp.datas) {
+                    $.i18n.load(resp.datas);
+                }
+            });
+        },
+
+        /**
+         * @method lang
+         * @description 切换/获取语言
+         * @param {String} [param] - 语言种类, 传参时为设置语言，可选值 zh en， 不传时则为获取当前语言
+         */
+        lang: function() {
+            return BH_UTILS.lang.apply(BH_UTILS, arguments);
+        }
     };
 
     return utils;

@@ -81,12 +81,14 @@ define(function (require, exports, module) {
                       });
                     })();
                   }
-                  ubaseUtils.initFramework();
-                  if (ieVersion === 9) {
-                    $('.app-loading').remove()
-                  }
-                  self.afterFrameworkInit();
-                  router.init('/' + appEntry);
+                  utils.getlangResource().always(function(){
+                    ubaseUtils.initFramework();
+                    if (ieVersion === 9) {
+                      $('.app-loading').remove()
+                    }
+                    self.afterFrameworkInit();
+                    router.init('/' + appEntry);
+                  });
                 });
             });
           })
