@@ -81,7 +81,7 @@ define(function (require, exports, module) {
                       });
                     })();
                   }
-                  utils.getlangResource().always(function(){
+                  utils.getLangResource().always(function(){
                     ubaseUtils.initFramework();
                     if (ieVersion === 9) {
                       $('.app-loading').remove()

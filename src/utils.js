@@ -470,7 +470,7 @@ define(function(require, exports, module) {
             var appName = paths[paths.indexOf('sys') + 1];
             var ctx = paths[1];
             var uri = ctx + '/i18n.do';
-            return this.doAjax(uri, { appName: appName }).always(function(resp) {
+            return this.doAjax(uri, { appName: appName }).done(function(resp) {
                 if (resp.code === '0' && resp.datas) {
                     $.i18n.load(resp.datas);
                 }
