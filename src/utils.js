@@ -454,7 +454,7 @@ define(function(require, exports, module) {
         //  bh_aq_search: 从{1}中搜索{2}
         // }
         i18n: function(html) {
-            return html.replace(/i18n\(\S+\)/, function(match) {
+            return html.replace(/i18n\(\S+\)/g, function(match) {
                 var matchResult = match.match(/i18n\((\S+)\)/)[1]
                 return BH_UTILS.i18n(matchResult)
             })
@@ -469,10 +469,14 @@ define(function(require, exports, module) {
             var paths = location.pathname.split('/');
             var appName = paths[paths.indexOf('sys') + 1];
             var ctx = paths[1];
-            var uri = ctx + '/i18n.do';
-            return this.doAjax(uri, { appName: appName }).done(function(resp) {
+            var uri = '/' + ctx + '/i18n.do';
+            var lang = utils.lang();
+            return this.doAjax(uri, { appName: appName, EMAP_LANG: lang }, 'GET').done(function(resp) {
                 if (resp.code === '0' && resp.datas) {
-                    $.i18n.load(resp.datas);
+                    $.i18n().load(resp.datas, lang);
+                    $.i18n({
+                        locale: lang
+                    });
                 }
             });
         },
