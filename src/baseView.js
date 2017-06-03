@@ -159,6 +159,9 @@ define(function(require, exports, module) {
       var app = new viewCore();
     if(_lastView){
       clearSubViewInfo(_lastView)
+      if(typeof _lastView.destroy === 'function'){
+        _lastView.destroy()
+      }
     }
 
     _lastView = app
