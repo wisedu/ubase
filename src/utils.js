@@ -488,6 +488,18 @@ define(function(require, exports, module) {
          */
         lang: function() {
             return BH_UTILS.lang.apply(BH_UTILS, arguments);
+        },
+
+        // bh_aq_search|搜索,{{aaa}},{{bbb}}
+        // {
+        //  bh_aq_search: 从{1}中搜索{2}
+        // }
+        bhI18n: function(str) {
+            if (window.BH_UTILS) {
+                str = str || '';
+                return BH_UTILS.i18n(str);
+            }
+            return str;
         }
     };
 

@@ -11,6 +11,8 @@ define(function (require, exports, module) {
       var modules = utils.getConfig('MODULES');
 
       _.each(modules, function (module) {
+        var title = module.title;
+        module.title = utils.bhI18n(title);
         if (module.originRoute) {
           return;
         }

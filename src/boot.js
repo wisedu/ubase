@@ -81,14 +81,19 @@ define(function (require, exports, module) {
                       });
                     })();
                   }
-                  utils.getLangResource().always(function(){
+                  var initFramework = function()  {
                     ubaseUtils.initFramework();
                     if (ieVersion === 9) {
                       $('.app-loading').remove()
                     }
                     self.afterFrameworkInit();
                     router.init('/' + appEntry);
-                  });
+                  };
+                  if (window.APP_CONFIG && window.APP_CONFIG.USE_LANG) {
+                    utils.getLangResource().always(initFramework);
+                  } else {
+                    initFramework();
+                  }
                 });
             });
           })
