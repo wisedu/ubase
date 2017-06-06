@@ -454,7 +454,7 @@ define(function(require, exports, module) {
         //  bh_aq_search: 从{1}中搜索{2}
         // }
         i18n: function(html) {
-            return html.replace(/i18n\(\S+\)/g, function(match) {
+            return html.replace(/i18n\([^\)]+\)/g, function(match) {
                 var matchResult = match.match(/i18n\((\S+)\)/)[1]
                 return BH_UTILS.i18n(matchResult)
             })
