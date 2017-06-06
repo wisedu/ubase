@@ -40,7 +40,6 @@ define(function(require, exports, module) {
                 dataType: 'html',
                 async: false
             }).done(function(res) {
-                console.log(res)
                 html = res;
             });
             // 在渲染模板之前需要先进行国际化内容处理
