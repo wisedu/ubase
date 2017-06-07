@@ -496,7 +496,7 @@ define(function(require, exports, module) {
         //  bh_aq_search: 从{1}中搜索{2}
         // }
         bhI18n: function(str) {
-            if (window.BH_UTILS) {
+            if (window.BH_UTILS && $.i18n) {
                 str = str || '';
                 return BH_UTILS.i18n(str);
             }
