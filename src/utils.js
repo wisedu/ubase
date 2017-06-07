@@ -43,7 +43,9 @@ define(function(require, exports, module) {
                 html = res;
             });
             // 在渲染模板之前需要先进行国际化内容处理
-            html = this.i18n(html)
+            if ($.i18n) {
+                html = this.i18n(html);
+            }
             return Hogan.compile(html);
         },
 
