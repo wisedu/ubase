@@ -81,12 +81,26 @@ define(function (require, exports, module) {
                       });
                     })();
                   }
-                  ubaseUtils.initFramework();
-                  if (ieVersion === 9) {
-                    $('.app-loading').remove()
+                  var initFramework = function()  {
+                    ubaseUtils.initFramework();
+                    if (ieVersion === 9) {
+                      $('.app-loading').remove()
+                    }
+                    self.afterFrameworkInit();
+                    router.init('/' + appEntry);
+                  };
+                  if (window.APP_CONFIG && window.APP_CONFIG.hasOwnProperty('USE_LANG')) {
+                    if (window.APP_CONFIG.hasOwnProperty('USE_LANG')) {
+                      if (!window.APP_CONFIG.USE_LANG) {
+                        utils.lang('zh');
+                      }
+                      utils.getLangResource().always(initFramework);
+                    } else {
+                      initFramework();
+                    }
+                  } else {
+                    initFramework();
                   }
-                  self.afterFrameworkInit();
-                  router.init('/' + appEntry);
                 });
             });
           })
