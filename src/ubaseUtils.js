@@ -10,6 +10,10 @@ define(function (require, exports, module) {
     getModules: function () {
       var modules = utils.getConfig('MODULES');
 
+      if(typeof modules == 'undefined'){
+        modules = [];
+      }
+
       _.each(modules, function (module) {
         if (module.originRoute) {
           return;
