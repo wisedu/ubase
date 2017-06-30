@@ -160,5 +160,9 @@ define(function (require, exports, module) {
   if (platformConfig && platformConfig.logoRootUrl) {
     config['HEADER'].logo = platformConfig.rootPath + platformConfig.logoRootUrl + platformConfig.logo.normal;
   }
+  //elvis 2017-06-30 公有云部署时，logo地址特别指定。
+  if (config["schoolID"] !== undefined && config["LOGO_PATH"] !== undefined){
+    config['HEADER'].logo = config["LOGO_PATH"].replace("{schoolID}", config["schoolID"]);
+  }
   return config;
 });
