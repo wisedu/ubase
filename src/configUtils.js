@@ -4,8 +4,6 @@ define(function (require, exports, module) {
   var serverConfig = {};
 
   if (config.SERVER_CONFIG_API) {
-    var serverConfig = null;
-
     ajax({
       url: config.SERVER_CONFIG_API,
       async: false,
@@ -28,22 +26,23 @@ define(function (require, exports, module) {
 
     var isCrossorigin = (function() {
       if (/^(http:\/\/|https:\/\/)/.test(options.url)) {
-        var match = options.url.match(/^((http:\/\/|https:\/\/)[^/|^:]+)\/*/)
+        var match = options.url.match(/^((http:\/\/|https:\/\/)[^/|^:]+)\/*/);
         if (match[1]) {
-          return match[1] != location.protocol + '//' + location.host
+          return match[1] != location.protocol + '//' + location.host;
         }
       }
-      return false
-    })()
+      return false;
+    })();
 
     //创建 - 非IE6 - 第一步
+    var xhr = {};
     if (window.XMLHttpRequest && document.documentMode != 9) {
-      var xhr = new XMLHttpRequest();
+      xhr = new XMLHttpRequest();
     } else { //IE6及其以下版本浏览器
       if (isCrossorigin) {
-        var xhr = new XDomainRequest()
+        xhr = new XDomainRequest();
       } else {
-        var xhr = new ActiveXObject('Microsoft.XMLHTTP');
+        xhr = new ActiveXObject('Microsoft.XMLHTTP');
       }
     }
 
@@ -57,7 +56,7 @@ define(function (require, exports, module) {
           options.fail && options.fail(status);
         }
       }
-    }
+    };
 
     if (options.url.indexOf('?') >= 0) {
       options.url = options.url.substring(0, options.url.indexOf('?'));
@@ -93,7 +92,7 @@ define(function (require, exports, module) {
   function formatParams(url, data) {
     var arr = [];
     if (url.indexOf('?') >= 0) {
-      var arr = url.substr(url.indexOf('?') + 1).split('&');
+      arr = url.substr(url.indexOf('?') + 1).split('&');
     }
 
     for (var name in data) {
@@ -157,11 +156,11 @@ define(function (require, exports, module) {
   }
 
   // 尝试读取平台的logo做为默认logo图片
-  if (platformConfig && platformConfig.logoRootUrl) {
+  if (platformConfig && platformConfig.logoRootUrl && config['HEADER']) {
     config['HEADER'].logo = platformConfig.rootPath + platformConfig.logoRootUrl + platformConfig.logo.normal;
   }
   //elvis 2017-06-30 公有云部署时，logo地址特别指定。
-  if (config["schoolID"] !== undefined && config["LOGO_PATH"] !== undefined){
+  if (config["schoolID"] !== undefined && config["LOGO_PATH"] !== undefined && config['HEADER']){
     config['HEADER'].logo = config["LOGO_PATH"].replace("{schoolID}", config["schoolID"]);
   }
   return config;
