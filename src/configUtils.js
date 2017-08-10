@@ -132,7 +132,7 @@ define(function (require, exports, module) {
             serverConfig = JSON.parse(response)
           } catch (e) {
             console && console.error('无效的res config')
-            console && cosnole.log(response)
+            console && console.log(response)
           }
           serverConfig = serverConfig || {}
           config['FOOTER_TEXT'] = serverConfig['FOOTER_TEXT']
