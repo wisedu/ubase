@@ -110,8 +110,13 @@ define(function (require, exports, module) {
     if (typeof (platformConfig) == 'string') {
       platformConfig = JSON.parse(platformConfig);
     }
-    if (platformConfig.footer && platformConfig.footer.normal) {
-      config['FOOTER_TEXT'] = platformConfig.footer.normal;
+    if (platformConfig.footer) {
+      var lang = getCookie('EMAP_LANG');
+      if (lang === 'en') {
+        config['FOOTER_TEXT'] = platformConfig.footer.enFooter || platformConfig.footer.normal;
+      } else {
+        config['FOOTER_TEXT'] = platformConfig.footer.normal;
+      }
     }
 
     if (platformConfig.skin) {
