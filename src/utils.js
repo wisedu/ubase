@@ -374,16 +374,16 @@ define(function(require, exports, module) {
                 iconType = null;
 
             if (type == 'success' || type == 'done') {
-                okClass = 'bh-btn-success';
+//                 okClass = 'bh-btn-success';
                 iconType = 'success';
             } else if (type == 'warn' || type == 'warning' || type == 'warning') {
-                okClass = 'bh-btn-warning';
+//                 okClass = 'bh-btn-warning';
                 iconType = 'warning';
             } else if (type == 'danger' || type == 'error') {
-                okClass = 'bh-btn-danger';
+//                 okClass = 'bh-btn-danger';
                 iconType = 'danger';
             } else if (type == 'confirm') {
-                okClass = 'bh-btn-warning';
+//                 okClass = 'bh-btn-warning';
                 iconType = 'warning';
             } else {
                 return;
@@ -394,7 +394,7 @@ define(function(require, exports, module) {
             if (options.okCallback) {
                 var okButtonInfo = {
                     text: options.okText || '确认',
-                    className: okClass,
+//                     className: okClass,
                     callback: options.okCallback
                 };
                 buttonList.push(okButtonInfo);
@@ -403,7 +403,7 @@ define(function(require, exports, module) {
             if (options.cancelCallback) {
                 var cancelButtonInfo = {
                     text: options.noText || options.cancelText || '取消',
-                    className: 'bh-btn-default',
+//                     className: 'bh-btn-default',
                     callback: options.cancelCallback
                 };
                 buttonList.push(cancelButtonInfo);
@@ -411,8 +411,8 @@ define(function(require, exports, module) {
 
             if (options.okCallback && !options.cancelCallback && type == 'confirm') {
                 buttonList.push({
-                    text: options.noText || options.cancelText || '取消',
-                    className: 'bh-btn-default'
+                    text: options.noText || options.cancelText || '取消'
+//                     className: 'bh-btn-default'
                 });
             }
             options.buttons = options.buttonList || buttonList;
