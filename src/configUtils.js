@@ -112,7 +112,7 @@ define(function (require, exports, module) {
     }
     if (platformConfig.footer) {
       var lang = getCookie('EMAP_LANG');
-      if (lang === 'en') {
+      if (lang === 'en' && config.USE_LANG) {
         config['FOOTER_TEXT'] = platformConfig.footer.enFooter || platformConfig.footer.normal;
       } else {
         config['FOOTER_TEXT'] = platformConfig.footer.normal;

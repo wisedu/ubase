@@ -89,23 +89,24 @@ define(function (require, exports, module) {
                     self.afterFrameworkInit();
                     router.init('/' + appEntry);
                   };
-                  if (window.APP_CONFIG && window.APP_CONFIG.hasOwnProperty('USE_LANG')) {
+                  if (window.APP_CONFIG) {
                     if (window.APP_CONFIG.hasOwnProperty('USE_LANG')) {
                       if (!window.APP_CONFIG.USE_LANG) {
                         utils.lang('zh');
                       }
                       utils.getLangResource().always(initFramework);
                     } else {
+                      utils.lang('zh');
                       initFramework();
                     }
                   } else {
+                    utils.lang('zh');
                     initFramework();
                   }
                 });
             });
-          })
-        })
-
+          });
+        });
       });
     },
 
