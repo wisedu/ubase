@@ -338,11 +338,11 @@ define(function(require, exports, module) {
         warningDialog: function(options) {
             if (!options) return;
             var buttonList = [{
-                text: '确认',
-                className: 'bh-btn-warning'
+                text: '确认'
+                // className: 'bh-btn-warning'
             }, {
-                text: '取消',
-                className: 'bh-btn-default'
+                text: '取消'
+                // className: 'bh-btn-default'
             }];
             if (options.callback) {
                 buttonList[0].callback = options.callback
@@ -352,7 +352,11 @@ define(function(require, exports, module) {
                 iconType: 'warning',
                 title: options.title,
                 content: options.content,
-                buttons: options.buttons || buttonList
+                //qiyu 2017-11-22 按钮样式不允许外部传递，样式全控
+                buttons: options.buttons.map(function(item){
+                    delete item.className;
+                    return item;
+                }) || buttonList
             };
             if (options.height) {
                 params["height"] = options.height;
@@ -402,9 +406,9 @@ define(function(require, exports, module) {
 
             if (options.cancelCallback) {
                 var cancelButtonInfo = {
-                    text: options.noText || options.cancelText || '取消',
+                    text: options.noText || options.cancelText || '取消'
 //                     className: 'bh-btn-default',
-                    callback: options.cancelCallback
+                    // callback: options.cancelCallback
                 };
                 buttonList.push(cancelButtonInfo);
             }
@@ -415,7 +419,11 @@ define(function(require, exports, module) {
 //                     className: 'bh-btn-default'
                 });
             }
-            options.buttons = options.buttonList || buttonList;
+            //qiyu 2017-11-22 按钮样式不允许外部传递，样式全控
+            options.buttons = options.buttonList.map(function(item){
+                delete item.className;
+                return item;
+            }) || buttonList;
 
             //qiyu 2017-3-21 type会作为dialog的背景颜色，传递confirm导致对话框背景无颜色
             if (type == 'confirm') {
