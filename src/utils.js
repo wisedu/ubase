@@ -353,10 +353,10 @@ define(function(require, exports, module) {
                 title: options.title,
                 content: options.content,
                 //qiyu 2017-11-22 按钮样式不允许外部传递，样式全控
-                buttons: options.buttons.map(function(item){
+                buttons: (options.buttons !== undefined ? options.buttons.map(function(item){
                     delete item.className;
                     return item;
-                }) || buttonList
+                }) : buttonList)
             };
             if (options.height) {
                 params["height"] = options.height;
@@ -420,10 +420,10 @@ define(function(require, exports, module) {
                 });
             }
             //qiyu 2017-11-22 按钮样式不允许外部传递，样式全控
-            options.buttons = options.buttonList.map(function(item){
+            options.buttons = (options.buttons !== undefined ? options.buttonList.map(function(item){
                 delete item.className;
                 return item;
-            }) || buttonList;
+            }) : buttonList);
 
             //qiyu 2017-3-21 type会作为dialog的背景颜色，传递confirm导致对话框背景无颜色
             if (type == 'confirm') {
