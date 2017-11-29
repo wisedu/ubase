@@ -126,7 +126,7 @@ define(function (require, exports, module) {
     if (platformConfig.rootPath) {
       config['APP_INFO_ROOT_PATH'] = platformConfig.rootPath;
     }
-  } else {
+  } else if (!config['FOOTER_TEXT']) {
     try {
       // 门户和应用分域名部署时，取不到配置的cookie，则请求res上的静态配置文件
       ajax({
