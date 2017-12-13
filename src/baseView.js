@@ -21,7 +21,7 @@ define(function(require, exports, module) {
 
       var res = {};
       _.each(this._routerParams, function(param, index) {
-        res[index] = param;
+        res[index] = decodeURIComponent(param);
       });
 
       return res;
