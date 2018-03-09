@@ -48,9 +48,9 @@ define(function (require, exports, module) {
                       var index = i;
                       var route = modules[i].route && modules[i].route.trim();
 
-                      if (route.isOpenNewPage) {
-                        return;
-                      }
+                      // if (route.isOpenNewPage) {
+                      //   return;
+                      // }
 
                       if (_.includes(bindedRoutes, route)) {
                         return;

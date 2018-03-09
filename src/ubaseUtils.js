@@ -38,9 +38,8 @@ define(function (require, exports, module) {
     },
     getSortedModules: function () {
       var modules = this.getModules();
-
       modules = _.sortBy(modules, function (obj) {
-        return -obj.route.length;
+        return obj.range;
       });
 
       return modules;
@@ -139,8 +138,19 @@ define(function (require, exports, module) {
       }
 
       for (var i = 0; i < nav.length; i++) {
-        if (nav[i].route === (hash || appEntry)) {
-          nav[i].active = true;
+        if(nav[i].route){
+          if (nav[i].route === (hash || appEntry)) {
+            nav[i].active = true;
+          }
+        }else{
+          if(nav[i]&&nav[i].children){
+            for(var j = 0; j < nav[i].children.length; j++){
+              if ((nav[i].children)[j].route === (hash || appEntry)) {
+                nav[i].active = true;
+                break;
+              }
+            }
+          }
         }
       }
 
