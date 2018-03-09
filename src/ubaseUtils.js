@@ -21,8 +21,17 @@ define(function (require, exports, module) {
           return;
         }
         module.isOpenNewPage = module.isOpenNewPage || (module.url ? true : false);
-        module.originRoute = module.route || module.url;
-        module.route = (module.route && !module.isOpenNewPage) ? (module.route.indexOf('/') > 0 ? module.route.substr(0, module.route.indexOf('/')) : module.route) : '';
+        if(module.route || module.url){
+          module.originRoute = module.route || module.url;
+          module.route = (module.route && !module.isOpenNewPage) ? (module.route.indexOf('/') > 0 ? module.route.substr(0, module.route.indexOf('/')) : module.route) : '';
+        }else{
+          var moduleChildren = module.children;
+          module.originRoute = moduleChildren[0].route||moduleChildren[0].url;
+          for(var i=0;i<moduleChildren.length;i++){          
+            moduleChildren[i].route= (moduleChildren[i].route && !moduleChildren[i].isOpenNewPage) ? (moduleChildren[i].route.indexOf('/') > 0 ? moduleChildren[i].route.substr(0, moduleChildren[i].route.indexOf('/')) : moduleChildren[i].route) : '';
+          }
+          module.children = moduleChildren;
+        }
       });
 
       return modules;
