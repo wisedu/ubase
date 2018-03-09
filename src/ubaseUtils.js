@@ -83,7 +83,7 @@ define(function (require, exports, module) {
       var firstModule = _.find(modules, function (module) {
         return !module.isOpenNewPage
       });
-      return (appEntry || firstModule.originRoute).trim();
+      return $.trim(appEntry || firstModule.originRoute);
     },
 
     /**
