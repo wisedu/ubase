@@ -224,6 +224,7 @@ define(function (require, exports, module) {
         // utils.miniMode();
       } else {
         ubaseUtils.initEvaluate();
+        ubaseUtils.initUseApps();
       }
       ubaseUtils.configRouter();
       if (bodyNiceScroll) {
@@ -281,6 +282,14 @@ define(function (require, exports, module) {
         userName: ampUserName, //用户名
         userId: ampUserId, //用户id
         rootPath: rootPath
+      });
+    },
+
+    initUseApps: function () {
+      var rootPath = utils.getConfig('APP_INFO_ROOT_PATH');
+      $.ampUseApps.init({
+        show: true,
+        rootPath: 'http://ampdx.wisedu.com/amp2_3_1'
       });
     },
 
