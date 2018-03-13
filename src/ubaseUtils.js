@@ -1,3 +1,4 @@
+
 define(function (require, exports, module) {
 
   var configUtils = require('configUtils');
@@ -39,7 +40,7 @@ define(function (require, exports, module) {
     getSortedModules: function () {
       var modules = this.getModules();
       modules = _.sortBy(modules, function (obj) {
-        return obj.range;
+        return -obj.originRoute.length;
       });
 
       return modules;
