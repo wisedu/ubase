@@ -308,7 +308,7 @@ define(function (require, exports, module) {
       var rootPath = utils.getConfig('APP_INFO_ROOT_PATH');
       $.ampUseApps.init({
         show: true,
-        rootPath: 'http://ampdx.wisedu.com/amp2_3_1'
+        rootPath: rootPath
       });
     },
 
