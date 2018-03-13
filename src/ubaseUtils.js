@@ -306,10 +306,12 @@ define(function (require, exports, module) {
 
     initUseApps: function () {
       var rootPath = utils.getConfig('APP_INFO_ROOT_PATH');
-      $.ampUseApps.init({
-        show: true,
-        rootPath: rootPath
-      });
+      if (rootPath) {
+        $.ampUseApps.init({
+          show: true,
+          rootPath: rootPath
+        });
+      }
     },
 
     configRouter: function () {
