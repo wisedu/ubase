@@ -47,7 +47,35 @@ define(function (require, exports, module) {
                     (function () {
                       var index = i;
                       var route = modules[i].route && modules[i].route.trim();
-
+                      if(!route && modules[i].children && modules[i].children.length){
+                        var children = modules[i].children;
+                        for(var k=0;k<modules[i].children.length;k++){
+                          (function (){
+                            var cIndex = k;
+                            var childRoute = children[cIndex].route && children[cIndex].route.trim();
+                            router.on('/' + childRoute + '/?((w|.)*)', function (path) {
+                              var currentModule = ubaseUtils.getCurrentModule();
+                              var currentModuleChildren = currentModule.children;
+                              if (currentModule && currentRoute === currentModuleChildren[cIndex].route) {
+                                  return;
+                              }
+                              ubaseUtils.cleanMainArea();
+                              ubaseUtils.showLoading();
+                              var path = path ? path.split('/') : [];
+                              try {
+                                req([currentAppViews[index][cIndex]], function (viewConfig) {
+                                  baseView(viewConfig, path);
+                                  ubaseUtils.hideLoading();
+                                });
+                              }catch (error) {
+                                log.error(error);
+                              }
+                              locationHash = location.hash;
+                              currentRoute = currentModuleChildren[cIndex].route;
+                            });
+                          }());
+                        }
+                      }
                       // if (route.isOpenNewPage) {
                       //   return;
                       // }
@@ -287,7 +315,19 @@ define(function (require, exports, module) {
         if (modules[i].isOpenNewPage) {
           deps.push('');
         } else {
-          deps.push((innerIndexMode ? '../' : '') + 'modules/' + modules[i].route + '/' + modules[i].route);
+          if(modules[i].route){
+            deps.push((innerIndexMode ? '../' : '') + 'modules/' + modules[i].route + '/' + modules[i].route);  
+          }else{
+            var children=[];
+            for(var j=0;j<modules[i].children.length;j++){
+              if(modules[i].children[j].isOpenNewPage){
+                children.push('');
+              }else{
+                children.push((innerIndexMode ? '../' : '') + 'modules/' + modules[i].children[j].route + '/' + modules[i].children[j].route);  
+              }
+            }
+            deps.push(children);
+          }
         }
       }
 

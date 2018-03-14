@@ -1,3 +1,4 @@
+
 define(function (require, exports, module) {
 
   var configUtils = require('configUtils');
@@ -39,7 +40,7 @@ define(function (require, exports, module) {
     getSortedModules: function () {
       var modules = this.getModules();
       modules = _.sortBy(modules, function (obj) {
-        return obj.range;
+        return -obj.originRoute.length;
       });
 
       return modules;
@@ -121,7 +122,8 @@ define(function (require, exports, module) {
             route: modules[i].route || modules[i].url,
             hide: modules[i].hide,
             isOpenNewPage: modules[i].isOpenNewPage,
-            href: '#/' + modules[i].originRoute
+            href: '#/' + modules[i].originRoute,
+            children: modules[i].children
           };
 
           if (modules[i].isOpenNewPage || modules[i].url) {
@@ -174,7 +176,17 @@ define(function (require, exports, module) {
           headerData['userInfo']['image'] = utils.getConfig('RESOURCE_SERVER') + '/images/user.png';
         }
       }
-
+      var navItems = headerData.nav;
+      for(var i=0;i<navItems.length;i++){
+        if(navItems[i].children&&navItems[i].children.length){
+          var children = navItems[i].children;
+          for(var j =0;j < children.length; j++){
+            children[j].href = '#/'+(children[j].route || children[j].url);
+          }
+          navItems[i].children=children;
+        }
+      }
+      headerData.nav = navItems;
       $('body').children('header').bhHeader(headerData);
     },
 
@@ -219,7 +231,7 @@ define(function (require, exports, module) {
 
     initFramework: function () {
       var miniMode = utils.getConfig('MINI_MODE');
-        var hideNav = utils.getConfig('HIDE_NAV');
+      var hideNav = utils.getConfig('HIDE_NAV');
       var headerCount = utils.getConfig('HEADER_COUNT');
       var bodyNiceScroll = utils.getConfig('NICESCROLL');
       var userParams = this.getUserParams();
@@ -373,9 +385,19 @@ define(function (require, exports, module) {
       var currentModule = null;
 
       for (var i = 0; i < modules.length; i++) {
-        if (_.startsWith(hash + '/', modules[i].originRoute + '/')) {
-          currentModule = modules[i];
-          break;
+        if(modules[i].children && modules[i].children.length){
+          var children = modules[i].children;
+          for(var j = 0; j< children.length; j++){
+            if (_.startsWith(hash + '/', children[j].route + '/')) {
+              currentModule = modules[i];
+              break;
+            }
+          }
+        }else{
+          if (_.startsWith(hash + '/', modules[i].originRoute + '/')) {
+            currentModule = modules[i];
+            break;
+          }
         }
       }
 
