@@ -306,7 +306,8 @@ define(function (require, exports, module) {
 
     initUseApps: function () {
       var rootPath = utils.getConfig('APP_INFO_ROOT_PATH');
-      if (rootPath) {
+      var showUseApps = utils.getConfig('SHOW_USEAPPS');
+      if (showUseApps) {
         $.ampUseApps.init({
           show: true,
           rootPath: rootPath
