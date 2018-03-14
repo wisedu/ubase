@@ -39,10 +39,15 @@ define(function (require, exports, module) {
     },
     getSortedModules: function () {
       var modules = this.getModules();
-      modules = _.sortBy(modules, function (obj) {
+      var urlModules = [],routeModules=[];
+      modules.forEach(function(obj){
+        obj.url?urlModules.push(obj):routeModules.push(obj);
+      })
+
+      routeModules = _.sortBy(routeModules, function (obj) {
         return -obj.originRoute.length;
       });
-
+      modules = routeModules.concat(urlModules);
       return modules;
     },
 
