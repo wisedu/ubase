@@ -195,6 +195,14 @@ define(function (require, exports, module) {
           var children = navItems[i].children;
           for(var j =0;j < children.length; j++){
             children[j].href = '#/'+(children[j].route || children[j].url);
+            if (children[j].url) {
+              var sysIndex = location.href.indexOf('/sys/');
+              var origin = location.href.substr(0, sysIndex);
+              children[j].href = children[j].url.replace(/\{context\}/, origin);
+              if (_.startsWith(children[j].url, 'http://')) {
+                children[j].href =children[j].url;
+              }
+            }
           }
           children = _.sortBy(children, function(child){
               return parseInt(child.range, 10);
