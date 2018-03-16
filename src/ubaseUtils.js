@@ -196,7 +196,7 @@ define(function (require, exports, module) {
           for(var j =0;j < children.length; j++){
             children[j].href = '#/'+(children[j].route || children[j].url);
           }
-          children = _sortBy(children, function(child){
+          children = _.sortBy(children, function(child){
               return parseInt(child.range, 10);
           });
           navItems[i].children=children;
