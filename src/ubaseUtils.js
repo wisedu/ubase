@@ -48,6 +48,14 @@ define(function (require, exports, module) {
         return -obj.originRoute.length;
       });
       modules = routeModules.concat(urlModules);
+      modules.forEach(function(obj){
+        if(obj.children && obj.children.length>1){
+          obj.children = _.sortBy(obj.children, function(child){
+            if(child.route === undefined) child.route="";
+            return -child.route.length;
+          });
+        }
+      });
       return modules;
     },
 
@@ -188,6 +196,9 @@ define(function (require, exports, module) {
           for(var j =0;j < children.length; j++){
             children[j].href = '#/'+(children[j].route || children[j].url);
           }
+          children = _sortBy(children, function(child){
+              return parseInt(child.range, 10);
+          });
           navItems[i].children=children;
         }
       }
