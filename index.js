@@ -1,6 +1,9 @@
 require([], function() {
   var req = require;
   $(function() {
+      req.config({
+        urlArgs: "bust=" +  (new Date()).getTime()
+      });
       req(
           [
               './config'
