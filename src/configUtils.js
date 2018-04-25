@@ -169,20 +169,22 @@ define(function (require, exports, module) {
   if (config["schoolID"] !== undefined && config["LOGO_PATH"] !== undefined && config['HEADER']){
     config['HEADER'].logo = config["LOGO_PATH"].replace("{schoolID}", config["schoolID"]);
   }
-  setTimeout(function(){
-    $.get(config.RESOURCE_SERVER + '/fe_components/package.json').always(function(resp){
-      if (resp.statusText === 'error') {
-        $.ajax({
-            url:'https://res.wisedu.com/statistics/ubase',
-            dataTypeString:'jsonp'
-        });
-      } else {
-        $.ajax({
-            url:'https://res.wisedu.com/statistics/ubase?v=' + resp.version,
-            dataTypeString:'jsonp'
-        });
-      }
-    });
-  }, 1000);
+  if (["127.0.0.1","localhost","0.0.0.0"].indexOf(window.location.hostname) == -1 ) {
+    setTimeout(function(){
+      $.get(config.RESOURCE_SERVER + '/fe_components/package.json').always(function(resp){
+        if (resp.statusText === 'error') {
+          $.ajax({
+              url:'https://res.wisedu.com/statistics/ubase',
+              dataTypeString:'jsonp'
+          });
+        } else {
+          $.ajax({
+              url:'https://res.wisedu.com/statistics/ubase?v=' + resp.version,
+              dataTypeString:'jsonp'
+          });
+        }
+      });
+    }, 1000);
+  }
   return config;
 });
