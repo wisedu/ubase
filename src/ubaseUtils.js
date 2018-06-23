@@ -278,7 +278,7 @@ define(function (require, exports, module) {
         //2017-2-16 解决加载慢的时候，头未被及时隐藏的问题
         // utils.miniMode();
       } else {
-        ubaseUtils.initEvaluate();
+        //ubaseUtils.initEvaluate();
         ubaseUtils.initUseApps();
       }
       ubaseUtils.configRouter();
