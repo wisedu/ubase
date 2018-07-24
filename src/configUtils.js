@@ -174,12 +174,12 @@ define(function (require, exports, module) {
       $.get(config.RESOURCE_SERVER + '/fe_components/package.json').always(function(resp){
         if (resp.statusText === 'error') {
           $.ajax({
-              url:'https://res.wisedu.com/statistics/ubase',
+              url:window.location.protocol + '//res.wisedu.com/statistics/ubase',
               dataTypeString:'jsonp'
           });
         } else {
           $.ajax({
-              url:'https://res.wisedu.com/statistics/ubase?v=' + resp.version,
+              url:window.location.protocol + '//res.wisedu.com/statistics/ubase?v=' + resp.version,
               dataTypeString:'jsonp'
           });
         }
