@@ -110,6 +110,7 @@ define(function (require, exports, module) {
     if (typeof (platformConfig) == 'string') {
       platformConfig = JSON.parse(platformConfig);
     }
+    config['SHOW_USEAPPS'] = platformConfig['SHOW_USEAPPS'];
     if (platformConfig.footer) {
       var lang = getCookie('EMAP_LANG');
       if (lang === 'en' && config.USE_LANG) {
