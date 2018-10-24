@@ -111,6 +111,7 @@ define(function (require, exports, module) {
       platformConfig = JSON.parse(platformConfig);
     }
     config['SHOW_USEAPPS'] = platformConfig['SHOW_USEAPPS'];
+    config['USEAPPS_TYPE'] = platformConfig['USEAPPS_TYPE'];
     if (platformConfig.footer) {
       var lang = getCookie('EMAP_LANG');
       if (lang === 'en' && config.USE_LANG) {
@@ -145,6 +146,7 @@ define(function (require, exports, module) {
           config['THEME'] = serverConfig['THEME']
           config['APP_INFO_ROOT_PATH'] = serverConfig['APP_INFO_ROOT_PATH'];
           config['SHOW_USEAPPS'] = config['SHOW_USEAPPS']?config['SHOW_USEAPPS']:serverConfig['SHOW_USEAPPS'];
+          config['USEAPPS_TYPE'] = config['USEAPPS_TYPE']?config['USEAPPS_TYPE']:serverConfig['USEAPPS_TYPE'];
         },
         fail: function (status) {
           console && console.error('AJAX 获取 RES 配置信息失败');

@@ -343,9 +343,14 @@ define(function (require, exports, module) {
     initUseApps: function () {
       var rootPath = utils.getConfig('APP_INFO_ROOT_PATH');
       var showUseApps = utils.getConfig('SHOW_USEAPPS');
+      var useAppsType = utils.getConfig('USEAPPS_TYPE');
+      var showTag = false;
+      if (useAppsType === 'spread') {
+        showTag = true;
+      }
       if (showUseApps) {
         $.ampUseApps.init({
-          show: true,
+          show: showTag,
           rootPath: rootPath
         });
       }
