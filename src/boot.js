@@ -43,43 +43,23 @@ define(function (require, exports, module) {
                   var args = arguments;
                   var currentRoute = null;
                   var bindedRoutes = [];
+                  var routes = [];
                   for (var i = 0; i < modules.length; i++) {
+                    if(modules[i].route){
+                      routes.push(modules[i].route && modules[i].route.trim());
+                    }else{
+                      if (modules[i].children && modules[i].children.length) {
+                            var children = modules[i].children;
+                            for (var k = 0; k < children.length; k++) {
+                               routes.push(children[k].route && children[k].route.trim())
+                            }
+                          }
+                    }
+                  }
+                  for (var i = 0; i < routes.length; i++) {
                     (function () {
                       var index = i;
-                      var route = modules[i].route && modules[i].route.trim();
-                      if(!route && modules[i].children && modules[i].children.length){
-                        var children = modules[i].children;
-                        for(var k=0;k<modules[i].children.length;k++){
-                          (function (){
-                            var cIndex = k;
-                            var childRoute = children[cIndex].route && children[cIndex].route.trim();
-                            router.on('/' + childRoute + '/?((w|.)*)', function (path) {
-                              var currentModule = ubaseUtils.getCurrentModule();
-                              var currentModuleChildren = currentModule.children;
-                              if (currentModule && currentRoute === currentModuleChildren[cIndex].route) {
-                                  return;
-                              }
-                              ubaseUtils.cleanMainArea();
-                              ubaseUtils.showLoading();
-                              var path = path ? path.split('/') : [];
-                              try {
-                                req([currentAppViews[index][cIndex]], function (viewConfig) {
-                                  baseView(viewConfig, path);
-                                  ubaseUtils.hideLoading();
-                                });
-                              }catch (error) {
-                                log.error(error);
-                              }
-                              locationHash = location.hash;
-                              currentRoute = currentModuleChildren[cIndex].route;
-                            });
-                          }());
-                        }
-                      }
-                      // if (route.isOpenNewPage) {
-                      //   return;
-                      // }
-
+                      var route = routes[index];
                       if (_.includes(bindedRoutes, route)) {
                         return;
                       }
@@ -321,12 +301,11 @@ define(function (require, exports, module) {
             var children=[];
             for(var j=0;j<modules[i].children.length;j++){
               if(modules[i].children[j].isOpenNewPage){
-                children.push('');
+                deps.push('');
               }else{
-                children.push((innerIndexMode ? '../' : '') + 'modules/' + modules[i].children[j].route + '/' + modules[i].children[j].route);  
+                deps.push((innerIndexMode ? '../' : '') + 'modules/' + modules[i].children[j].route + '/' + modules[i].children[j].route);  
               }
             }
-            deps.push(children);
           }
         }
       }

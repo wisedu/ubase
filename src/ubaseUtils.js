@@ -28,7 +28,8 @@ define(function (require, exports, module) {
         }else{
           var moduleChildren = module.children;
           module.originRoute = moduleChildren[0].route||moduleChildren[0].url;
-          for(var i=0;i<moduleChildren.length;i++){          
+          for(var i=0;i<moduleChildren.length;i++){
+            moduleChildren[i].originRoute = moduleChildren[i].route;          
             moduleChildren[i].route= (moduleChildren[i].route && !moduleChildren[i].isOpenNewPage) ? (moduleChildren[i].route.indexOf('/') > 0 ? moduleChildren[i].route.substr(0, moduleChildren[i].route.indexOf('/')) : moduleChildren[i].route) : '';
           }
           module.children = moduleChildren;
@@ -194,7 +195,7 @@ define(function (require, exports, module) {
         if(navItems[i].children&&navItems[i].children.length){
           var children = navItems[i].children;
           for(var j =0;j < children.length; j++){
-            children[j].href = '#/'+(children[j].route || children[j].url);
+            children[j].href = '#/'+(children[j].originRoute || children[j].url);
             if (children[j].url) {
               var sysIndex = location.href.indexOf('/sys/');
               var origin = location.href.substr(0, sysIndex);
@@ -417,8 +418,8 @@ define(function (require, exports, module) {
         if(modules[i].children && modules[i].children.length){
           var children = modules[i].children;
           for(var j = 0; j< children.length; j++){
-            if (_.startsWith(hash + '/', children[j].route + '/')) {
-              currentModule = modules[i];
+            if (_.startsWith(hash + '/', children[j].originRoute + '/')) {
+              currentModule = children[j];
               break;
             }
           }
