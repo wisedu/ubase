@@ -8,7 +8,15 @@ define(function (require, exports, module) {
       url: config.SERVER_CONFIG_API,
       async: false,
       success: function (response) {
-        serverConfig = JSON.parse(response)
+        serverConfig = JSON.parse(response);
+        // 解决bhHeader组件高亮条在有隐藏项时出现不准的问题  提出人：汪维亮 修改人： 王永建 2018/12/20
+        if(serverConfig.MODULES){
+          var navs = [],hideNavs = [];
+          serverConfig.MODULES.map(function(nav){
+            nav.hide?hideNavs.push(nav):navs.push(nav);
+          });
+          serverConfig.MODULES = navs.concat(hideNavs);
+        }
       },
       fail: function (status) {
         console.error('AJAX SERVER_CONFIG_API ERROR');
