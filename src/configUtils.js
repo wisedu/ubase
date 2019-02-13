@@ -165,9 +165,9 @@ define(function (require, exports, module) {
     }
   }
 
-  if (newSkin) {
+  if (newSkin && newSkin != 'undefined') {
     config['THEME'] = newSkin;
-  }
+}
   if (config.CONFIG_READY) {
     config.CONFIG_READY(config);
   }
