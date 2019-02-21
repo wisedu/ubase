@@ -132,6 +132,8 @@ define(function (require, exports, module) {
 
     loadPublicCss: function () {
       var cdn = utils.getConfig('RESOURCE_SERVER');
+      // add by jbxu from res固定文件 
+      var cdnNew = utils.getCurrentResUrl('RESOURCE_SERVER');
       var bhVersion = utils.getConfig('BH_VERSION');
       var ieShivCss = this.getResourceConfig('IE_SHIV_CSS');
       var publicCss = this.getResourceConfig('PUBLIC_CSS');
@@ -147,13 +149,21 @@ define(function (require, exports, module) {
 
       for (var i = 0; i < publicCss.length; i++) {
         var url = this.addTimestamp(publicCss[i]);
-        if (regEx.test(publicCss[i])) {
-          loadCss(cdn + url.replace(/\{\{theme\}\}/, theme).replace(/\{\{version\}\}/, version));
+        if (cdn === cdnNew) {
+          if (regEx.test(publicCss[i])) {
+            loadCss(cdn + url.replace(/\{\{theme\}\}/, theme).replace(/\{\{version\}\}/, version));
+          } else {
+            loadCss(url);
+          }
         } else {
-          loadCss(url);
+          url = url.replace('/fe_components','');
+          if (regEx.test(publicCss[i])) {
+            loadCss(cdnNew + url.replace(/\{\{theme\}\}/, theme).replace(/\{\{version\}\}/, version));
+          } else {
+            loadCss(url);
+          }
         }
       }
-
     },
 
     addTimestamp: function (url) {

@@ -509,6 +509,20 @@ define(function(require, exports, module) {
                 return BH_UTILS.i18n(str);
             }
             return str;
+        },
+        getCurrentResUrl:function(name){
+            var totalUrl = '';
+            $('script').each(function(index,item){
+                console.log(index,item.src)
+                if(item.src && item.src.indexOf('appcore')>-1){
+                    totalUrl = item.src;
+                }
+            });
+            if (totalUrl && totalUrl.indexOf('fe_components') === -1) {
+                return totalUrl.split('/appcore')[0]
+            }else {
+                return utils.getConfig(name)
+            }
         }
     };
 
