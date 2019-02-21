@@ -156,8 +156,8 @@ define(function (require, exports, module) {
             loadCss(url);
           }
         } else {
-          url = url.replace('/fe_components','');
           if (regEx.test(publicCss[i])) {
+            url = url.replace('/fe_components','');
             loadCss(cdnNew + url.replace(/\{\{theme\}\}/, theme).replace(/\{\{version\}\}/, version));
           } else {
             loadCss(url);
@@ -212,6 +212,8 @@ define(function (require, exports, module) {
 
     getPublicBaseJs: function () {
       var cdn = utils.getConfig('RESOURCE_SERVER');
+      // add by jbxu from res固定文件 
+      var cdnNew = utils.getCurrentResUrl('RESOURCE_SERVER');
       var publicBaseJs = this.getResourceConfig('PUBLIC_BASE_JS');
       var ieShivJs = this.getResourceConfig('IE_SHIV_JS');
       var bhVersion = utils.getConfig('BH_VERSION');
@@ -227,10 +229,19 @@ define(function (require, exports, module) {
 
       for (var i = 0; i < publicBaseJs.length; i++) {
         var url = this.addTimestamp(publicBaseJs[i]);
-        if (regEx.test(publicBaseJs[i])) {
-          deps.push(cdn + url.replace(/\{\{version\}\}/, version));
+        if (cdn === cdnNew) {
+          if (regEx.test(publicBaseJs[i])) {
+            deps.push(cdn + url.replace(/\{\{version\}\}/, version));
+          } else {
+            deps.push(url);
+          }
         } else {
-          deps.push(url);
+          if (regEx.test(publicBaseJs[i])) {
+            url = url.replace('/fe_components','');
+            deps.push(cdnNew + url.replace(/\{\{version\}\}/, version));
+          } else {
+            deps.push(url);
+          }
         }
       }
 
@@ -239,6 +250,8 @@ define(function (require, exports, module) {
 
     getPublicNormalJs: function () {
       var cdn = utils.getConfig('RESOURCE_SERVER');
+      // add by jbxu from res固定文件 
+      var cdnNew = utils.getCurrentResUrl('RESOURCE_SERVER');
       var bhVersion = utils.getConfig('BH_VERSION');
       var publicNormalJs = this.getResourceConfig('PUBLIC_NORMAL_JS');
       var version = bhVersion ? ('-' + bhVersion) : '';
@@ -250,10 +263,19 @@ define(function (require, exports, module) {
       var regEx = /fe_components|bower_components/;
       for (var i = 0; i < publicNormalJs.length; i++) {
         var url = this.addTimestamp(publicNormalJs[i]);
-        if (regEx.test(publicNormalJs[i])) {
-          deps.push(cdn + url.replace(/\{\{version\}\}/, version));
+        if (cdn === cdnNew) {
+          if (regEx.test(publicNormalJs[i])) {
+            deps.push(cdn + url.replace(/\{\{version\}\}/, version));
+          } else {
+            deps.push(url);
+          }
         } else {
-          deps.push(url);
+          if (regEx.test(publicBaseJs[i])) {
+            url = url.replace('/fe_components','');
+            deps.push(cdnNew + url.replace(/\{\{version\}\}/, version));
+          } else {
+            deps.push(url);
+          }
         }
       }
 
