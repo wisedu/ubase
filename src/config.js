@@ -3,30 +3,30 @@ define(function(require, exports, module) {
     var config = {
         "RESOURCE_VERSION": '100003',
         "PUBLIC_CSS": [
-            '/fe_components/iconfont/iconfont.css',
-            '/fe_components/iconfont_2.0/iconfont.css',
-            '/fe_components/jqwidget/{{theme}}/bh{{version}}.min.css',
-            '/fe_components/jqwidget/{{theme}}/bh-scenes{{version}}.min.css',
+            '/iconfont/iconfont.css',
+            '/iconfont_2.0/iconfont.css',
+            '/jqwidget/{{theme}}/bh{{version}}.min.css',
+            '/jqwidget/{{theme}}/bh-scenes{{version}}.min.css',
             '/bower_components/animate.css/animate.min.css',
             '/bower_components/sentsinLayer/skin/layer.css'
         ],
 
         "PUBLIC_BASE_JS": [
-            '/fe_components/bh_utils.js',
-            '/fe_components/amp/ampPlugins.min.js',
-            '/fe_components/jqwidget/jqxwidget.min.js',
-            '/fe_components/bhtc/moment/min/moment-with-locales.min.js',
-            '/fe_components/bhtc/sortable/Sortable.js'
+            '/bh_utils.js',
+            '/amp/ampPlugins.min.js',
+            '/jqwidget/jqxwidget.min.js',
+            '/bhtc/moment/min/moment-with-locales.min.js',
+            '/bhtc/sortable/Sortable.js'
         ],
 
         "PUBLIC_NORMAL_JS": [
-            '/fe_components/bh{{version}}.min.js',
-            '/fe_components/emap{{version}}.js',
-            '/fe_components/sentry/sentry.min.js'
+            '/bh{{version}}.min.js',
+            '/emap{{version}}.js',
+            '/sentry/sentry.min.js'
         ],
 
         "DEBUG_JS": [
-            '/fe_components/mock/mock.js'
+            '/mock/mock.js'
         ],
 
         "IE_SHIV_JS": [
@@ -35,7 +35,7 @@ define(function(require, exports, module) {
         ],
 
         "IE_SHIV_CSS": [
-            '/fe_components/jqwidget/{{theme}}/bh-ie.css'
+            '/jqwidget/{{theme}}/bh-ie.css'
         ]
 
     };

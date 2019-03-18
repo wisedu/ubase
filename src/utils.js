@@ -513,15 +513,15 @@ define(function(require, exports, module) {
         getCurrentResUrl:function(name){
             var totalUrl = '';
             $('script').each(function(index,item){
-                // console.log(index,item.src)
-                if(item.src && item.src.indexOf('appcore')>-1){
-                    totalUrl = item.src;
+                var tarSrc= item.src;
+                if(tarSrc && tarSrc.indexOf('appcore')>-1){
+                    totalUrl = tarSrc;
+                    return false;
                 }
             });
-            if (totalUrl && totalUrl.indexOf('fe_components') === -1) {
-                return totalUrl.split('/appcore')[0]
-            }else {
-                return utils.getConfig(name)
+            //离线资源引用
+            if (totalUrl && totalUrl.indexOf('appcore') > -1) {
+                return totalUrl.split('/appcore')[0];
             }
         }
     };

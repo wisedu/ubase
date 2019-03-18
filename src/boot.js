@@ -132,15 +132,21 @@ define(function (require, exports, module) {
 
     loadPublicCss: function () {
       var cdn = utils.getConfig('RESOURCE_SERVER');
-      // add by jbxu from res固定文件 
+      // add by jbxu from res固定文件
+      var cdnShort = '';
       var cdnNew = utils.getCurrentResUrl('RESOURCE_SERVER');
+      var isFeComponents = cdnNew.indexOf('fe_components');
+      if (isFeComponents>-1) {
+        cdnShort = cdnNew.split('/fe_components')[0];
+      } else {
+        cdnShort = cdnNew.split('/components')[0];
+      }
       var bhVersion = utils.getConfig('BH_VERSION');
       var ieShivCss = this.getResourceConfig('IE_SHIV_CSS');
       var publicCss = this.getResourceConfig('PUBLIC_CSS');
-      var publicCssNew
       var theme = utils.getConfig('THEME') || 'blue';
       var version = bhVersion ? ('-' + bhVersion) : '';
-      var regEx = /fe_components|bower_components/;
+      var regEx = /bower_components/;
       var currentBrowserVersion = ubaseUtils.getIEVersion();
 
       if (currentBrowserVersion && currentBrowserVersion == 9) {
@@ -149,19 +155,14 @@ define(function (require, exports, module) {
 
       for (var i = 0; i < publicCss.length; i++) {
         var url = this.addTimestamp(publicCss[i]);
-        if (cdn === cdnNew) {
-          if (regEx.test(publicCss[i])) {
-            loadCss(cdn + url.replace(/\{\{theme\}\}/, theme).replace(/\{\{version\}\}/, version));
+        if (regEx.test(publicCss[i])) {
+          if (isFeComponents>-1) {
+            loadCss(cdnShort + url.replace(/\{\{theme\}\}/, theme).replace(/\{\{version\}\}/, version));
           } else {
-            loadCss(url);
+            loadCss(cdn + url.replace(/\{\{theme\}\}/, theme).replace(/\{\{version\}\}/, version));
           }
         } else {
-          if (regEx.test(publicCss[i])) {
-            url = url.replace('/fe_components','');
-            loadCss(cdnNew + url.replace(/\{\{theme\}\}/, theme).replace(/\{\{version\}\}/, version));
-          } else {
-            loadCss(url);
-          }
+          loadCss(cdnNew + url.replace(/\{\{theme\}\}/, theme).replace(/\{\{version\}\}/, version));
         }
       }
     },
