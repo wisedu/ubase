@@ -513,7 +513,7 @@ define(function(require, exports, module) {
         getCurrentResUrl:function(name){
             var totalUrl = '';
             $('script').each(function(index,item){
-                console.log(index,item.src)
+                // console.log(index,item.src)
                 if(item.src && item.src.indexOf('appcore')>-1){
                     totalUrl = item.src;
                 }
