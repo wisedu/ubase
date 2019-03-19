@@ -213,8 +213,15 @@ define(function (require, exports, module) {
 
     getPublicBaseJs: function () {
       var cdn = utils.getConfig('RESOURCE_SERVER');
-      // add by jbxu from res固定文件 
+      // add by jbxu from res固定文件
+      var cdnShort = '';
       var cdnNew = utils.getCurrentResUrl('RESOURCE_SERVER');
+      var isFeComponents = cdnNew.indexOf('fe_components');
+      if (isFeComponents>-1) {
+        cdnShort = cdnNew.split('/fe_components')[0];
+      } else {
+        cdnShort = cdnNew.split('/components')[0];
+      }
       var publicBaseJs = this.getResourceConfig('PUBLIC_BASE_JS');
       var ieShivJs = this.getResourceConfig('IE_SHIV_JS');
       var bhVersion = utils.getConfig('BH_VERSION');
@@ -222,7 +229,7 @@ define(function (require, exports, module) {
 
       var currentBrowserVersion = ubaseUtils.getIEVersion();
       var deps = [];
-      var regEx = /fe_components|bower_components/;
+      var regEx = /bower_components/;
 
       if (currentBrowserVersion && currentBrowserVersion == 9) {
         publicBaseJs = publicBaseJs.concat(ieShivJs);
@@ -230,19 +237,14 @@ define(function (require, exports, module) {
 
       for (var i = 0; i < publicBaseJs.length; i++) {
         var url = this.addTimestamp(publicBaseJs[i]);
-        if (cdn === cdnNew) {
-          if (regEx.test(publicBaseJs[i])) {
-            deps.push(cdn + url.replace(/\{\{version\}\}/, version));
+        if (regEx.test(publicBaseJs[i])) {
+          if (isFeComponents>-1) {
+            deps.push(cdnShort + url.replace(/\{\{version\}\}/, version));
           } else {
-            deps.push(url);
+            deps.push(cdn + url.replace(/\{\{version\}\}/, version));
           }
         } else {
-          if (regEx.test(publicBaseJs[i])) {
-            url = url.replace('/fe_components','');
-            deps.push(cdnNew + url.replace(/\{\{version\}\}/, version));
-          } else {
-            deps.push(url);
-          }
+          deps.push(cdnNew + url);
         }
       }
 
@@ -251,8 +253,15 @@ define(function (require, exports, module) {
 
     getPublicNormalJs: function () {
       var cdn = utils.getConfig('RESOURCE_SERVER');
-      // add by jbxu from res固定文件 
+      // add by jbxu from res固定文件
+      var cdnShort = '';
       var cdnNew = utils.getCurrentResUrl('RESOURCE_SERVER');
+      var isFeComponents = cdnNew.indexOf('fe_components');
+      if (isFeComponents>-1) {
+        cdnShort = cdnNew.split('/fe_components')[0];
+      } else {
+        cdnShort = cdnNew.split('/components')[0];
+      }
       var bhVersion = utils.getConfig('BH_VERSION');
       var publicNormalJs = this.getResourceConfig('PUBLIC_NORMAL_JS');
       var version = bhVersion ? ('-' + bhVersion) : '';
@@ -261,22 +270,17 @@ define(function (require, exports, module) {
       var consoleDebug = store.session("debug");
       var releaseMode = utils.getConfig('RELEASE_MODE');
 
-      var regEx = /fe_components|bower_components/;
+      var regEx = /bower_components/;
       for (var i = 0; i < publicNormalJs.length; i++) {
         var url = this.addTimestamp(publicNormalJs[i]);
-        if (cdn === cdnNew) {
-          if (regEx.test(publicNormalJs[i])) {
-            deps.push(cdn + url.replace(/\{\{version\}\}/, version));
+        if (regEx.test(publicNormalJs[i])) {
+          if (isFeComponents>-1) {
+            deps.push(cdnShort + url.replace(/\{\{version\}\}/, version));
           } else {
-            deps.push(url);
+            deps.push(cdn + url.replace(/\{\{version\}\}/, version));
           }
         } else {
-          if (regEx.test(publicBaseJs[i])) {
-            url = url.replace('/fe_components','');
-            deps.push(cdnNew + url.replace(/\{\{version\}\}/, version));
-          } else {
-            deps.push(url);
-          }
+          deps.push(cdnNew + url.replace(/\{\{version\}\}/, version));
         }
       }
 
@@ -289,6 +293,9 @@ define(function (require, exports, module) {
 
     getMockJs: function () {
       var cdn = utils.getConfig('RESOURCE_SERVER');
+      // add by jbxu from res固定文件
+      var cdnNew = utils.getCurrentResUrl('RESOURCE_SERVER');
+
       var debugMode = utils.getConfig('FE_DEBUG_MODE');
       var bhVersion = utils.getConfig('BH_VERSION');
       var version = bhVersion ? ('-' + bhVersion) : '';
@@ -307,7 +314,7 @@ define(function (require, exports, module) {
         if (regEx.test(mockJs[i])) {
           deps.push(cdn + url.replace(/\{\{version\}\}/, version));
         } else {
-          deps.push(url);
+          deps.push(cdnNew + url);
         }
       }
 
