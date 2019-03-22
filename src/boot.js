@@ -147,6 +147,7 @@ define(function (require, exports, module) {
       var theme = utils.getConfig('THEME') || 'blue';
       var version = bhVersion ? ('-' + bhVersion) : '';
       var regEx = /bower_components/;
+      var regExTest = /localhost/;
       var currentBrowserVersion = ubaseUtils.getIEVersion();
 
       if (currentBrowserVersion && currentBrowserVersion == 9) {
@@ -155,14 +156,18 @@ define(function (require, exports, module) {
 
       for (var i = 0; i < publicCss.length; i++) {
         var url = this.addTimestamp(publicCss[i]);
-        if (regEx.test(publicCss[i])) {
-          if (isFeComponents>-1) {
-            loadCss(cdnShort + url.replace(/\{\{theme\}\}/, theme).replace(/\{\{version\}\}/, version));
-          } else {
-            loadCss(cdn + url.replace(/\{\{theme\}\}/, theme).replace(/\{\{version\}\}/, version));
-          }
+        if (regExTest.test(publicCss[i])) {
+          loadCss(url);
         } else {
-          loadCss(cdnNew + url.replace(/\{\{theme\}\}/, theme).replace(/\{\{version\}\}/, version));
+          if (regEx.test(publicCss[i])) {
+            if (isFeComponents>-1) {
+              loadCss(cdnShort + url.replace(/\{\{theme\}\}/, theme).replace(/\{\{version\}\}/, version));
+            } else {
+              loadCss(cdn + url.replace(/\{\{theme\}\}/, theme).replace(/\{\{version\}\}/, version));
+            }
+          } else {
+            loadCss(cdnNew + url.replace(/\{\{theme\}\}/, theme).replace(/\{\{version\}\}/, version));
+          }
         }
       }
     },
@@ -230,21 +235,25 @@ define(function (require, exports, module) {
       var currentBrowserVersion = ubaseUtils.getIEVersion();
       var deps = [];
       var regEx = /bower_components/;
-
+      var regExTest = /localhost/;
       if (currentBrowserVersion && currentBrowserVersion == 9) {
         publicBaseJs = publicBaseJs.concat(ieShivJs);
       }
 
       for (var i = 0; i < publicBaseJs.length; i++) {
         var url = this.addTimestamp(publicBaseJs[i]);
-        if (regEx.test(publicBaseJs[i])) {
-          if (isFeComponents>-1) {
-            deps.push(cdnShort + url.replace(/\{\{version\}\}/, version));
-          } else {
-            deps.push(cdn + url.replace(/\{\{version\}\}/, version));
-          }
+        if (regExTest.test(publicCss[i])) {
+          deps.push(url);
         } else {
-          deps.push(cdnNew + url);
+          if (regEx.test(publicBaseJs[i])) {
+            if (isFeComponents>-1) {
+              deps.push(cdnShort + url.replace(/\{\{version\}\}/, version));
+            } else {
+              deps.push(cdn + url.replace(/\{\{version\}\}/, version));
+            }
+          } else {
+            deps.push(cdnNew + url);
+          }
         }
       }
 
@@ -271,16 +280,21 @@ define(function (require, exports, module) {
       var releaseMode = utils.getConfig('RELEASE_MODE');
 
       var regEx = /bower_components/;
+      var regExTest = /localhost/;
       for (var i = 0; i < publicNormalJs.length; i++) {
         var url = this.addTimestamp(publicNormalJs[i]);
-        if (regEx.test(publicNormalJs[i])) {
-          if (isFeComponents>-1) {
-            deps.push(cdnShort + url.replace(/\{\{version\}\}/, version));
-          } else {
-            deps.push(cdn + url.replace(/\{\{version\}\}/, version));
-          }
+        if (regExTest.test(publicCss[i])) {
+          deps.push(url);
         } else {
-          deps.push(cdnNew + url.replace(/\{\{version\}\}/, version));
+          if (regEx.test(publicNormalJs[i])) {
+            if (isFeComponents>-1) {
+              deps.push(cdnShort + url.replace(/\{\{version\}\}/, version));
+            } else {
+              deps.push(cdn + url.replace(/\{\{version\}\}/, version));
+            }
+          } else {
+            deps.push(cdnNew + url.replace(/\{\{version\}\}/, version));
+          }
         }
       }
 
