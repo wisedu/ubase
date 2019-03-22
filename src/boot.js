@@ -242,7 +242,7 @@ define(function (require, exports, module) {
 
       for (var i = 0; i < publicBaseJs.length; i++) {
         var url = this.addTimestamp(publicBaseJs[i]);
-        if (regExTest.test(publicCss[i])) {
+        if (regExTest.test(publicBaseJs[i])) {
           deps.push(url);
         } else {
           if (regEx.test(publicBaseJs[i])) {
@@ -283,7 +283,7 @@ define(function (require, exports, module) {
       var regExTest = /localhost/;
       for (var i = 0; i < publicNormalJs.length; i++) {
         var url = this.addTimestamp(publicNormalJs[i]);
-        if (regExTest.test(publicCss[i])) {
+        if (regExTest.test(publicNormalJs[i])) {
           deps.push(url);
         } else {
           if (regEx.test(publicNormalJs[i])) {
