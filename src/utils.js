@@ -173,6 +173,29 @@ define(function(require, exports, module) {
             return def.promise();
         },
 
+        getEcharts4: function($elem, option, isNotEmpty) {
+            var def = $.Deferred();
+            $elem = $($elem);
+
+            req(
+                [
+                    'echarts4'
+                ],
+                function(ec) {
+                    var myChart = ec.init($elem[0]);
+
+                    if (!isNotEmpty) {
+                        $elem.html('<div style="display:table;width:100%;height:100%;"><div class="bh-color-primary-3" style="text-align:center;vertical-align:middle;display:table-cell;"><i class="iconfont" style="font-size:128px;">&#xe62a;</i><br><span class="h3" style="color:#999">暂无数据</span></div></div>');
+                        def.reject(myChart);
+                    }
+                    myChart.setOption(option);
+                    def.resolve(myChart);
+                }
+            );
+
+            return def.promise();
+        },
+
         getConfig: function(key) {
             return configUtils[key];
         },

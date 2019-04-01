@@ -29,12 +29,13 @@ require([], function() {
 
       var paths = {
         'css': cdn + '/bower_components/requirejs-css/css',
-        "echarts": cdn + "/bower_components/echarts3/dist/echarts"
+        "echarts": cdn + "/bower_components/echarts3/dist/echarts",
+        "echarts4": cdn + "/bower_components/echarts4/echarts.min.js"
       };
 
       if (thirdPartyPlugin) {
         _.each(Object.keys(thirdPartyPlugin), function(key) {
-          if (_.include(['utils', 'css', 'echarts', 'config', 'resourceConfig', 'baseView', 'boot', 'configUtils', 'text', 'ubaseUtils', 'log', 'router'], key)) {
+          if (_.include(['utils', 'css', 'echarts', 'echarts4', 'config', 'resourceConfig', 'baseView', 'boot', 'configUtils', 'text', 'ubaseUtils', 'log', 'router'], key)) {
             console && console.error && console.error('THIRD_PARTY_PLUGIN中配置的'+key + '名称框架内部已使用，请换成其他名称！');
             return;
           }
