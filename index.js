@@ -30,7 +30,7 @@ require([], function() {
       var paths = {
         'css': cdn + '/bower_components/requirejs-css/css',
         "echarts": cdn + "/bower_components/echarts3/dist/echarts",
-        "echarts4": cdn + "/bower_components/echarts4/echarts.min.js"
+        "echarts4": cdn + "/bower_components/echarts4/echarts.min"
       };
 
       if (thirdPartyPlugin) {
