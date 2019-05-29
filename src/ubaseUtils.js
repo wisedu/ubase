@@ -90,7 +90,7 @@ define(function(require, exports, module) {
     },
 
     getFixedMainLayout: function() {
-      var layout = '<header></header><main><div style="color:#fff;font-size:16px;padding: 16px 4px;">您无权限查看或者打开的链接不存在！</div></main><footer></footer>';
+      var layout = '<header></header><main><div style="background:#fff;min-height:936px;box-shadow:0 1px 4px rgba(0,0,0,0.28);"><img src="' + APP_CONFIG.RESOURCE_SERVER + '/images/404.png" style="display:block;margin:0 auto;padding-top:18%;"/></div></main><footer></footer>';
 
       $('body').prepend(layout);
     },
