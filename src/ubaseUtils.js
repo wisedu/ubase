@@ -1,5 +1,4 @@
-
-define(function (require, exports, module) {
+define(function(require, exports, module) {
 
   var configUtils = require('configUtils');
   var router = require('router');
@@ -8,29 +7,29 @@ define(function (require, exports, module) {
   var req = require;
 
   var ubaseUtils = {
-    getModules: function () {
+    getModules: function() {
       var modules = utils.getConfig('MODULES');
 
-      if(typeof modules == 'undefined'){
+      if (typeof modules == 'undefined') {
         modules = [];
       }
 
-      _.each(modules, function (module) {
+      _.each(modules, function(module) {
         var title = module.title;
         module.title = utils.bhI18n(title);
         if (module.originRoute) {
           return;
         }
         module.isOpenNewPage = module.isOpenNewPage || (module.url ? true : false);
-        if(module.route || module.url){
+        if (module.route || module.url) {
           module.originRoute = module.route || module.url;
           module.route = (module.route && !module.isOpenNewPage) ? (module.route.indexOf('/') > 0 ? module.route.substr(0, module.route.indexOf('/')) : module.route) : '';
-        }else{
+        } else {
           var moduleChildren = module.children;
-          module.originRoute = moduleChildren[0].route||moduleChildren[0].url;
-          for(var i=0;i<moduleChildren.length;i++){
-            moduleChildren[i].originRoute = moduleChildren[i].route;          
-            moduleChildren[i].route= (moduleChildren[i].route && !moduleChildren[i].isOpenNewPage) ? (moduleChildren[i].route.indexOf('/') > 0 ? moduleChildren[i].route.substr(0, moduleChildren[i].route.indexOf('/')) : moduleChildren[i].route) : '';
+          module.originRoute = moduleChildren[0].route || moduleChildren[0].url;
+          for (var i = 0; i < moduleChildren.length; i++) {
+            moduleChildren[i].originRoute = moduleChildren[i].route;
+            moduleChildren[i].route = (moduleChildren[i].route && !moduleChildren[i].isOpenNewPage) ? (moduleChildren[i].route.indexOf('/') > 0 ? moduleChildren[i].route.substr(0, moduleChildren[i].route.indexOf('/')) : moduleChildren[i].route) : '';
           }
           module.children = moduleChildren;
         }
@@ -38,21 +37,22 @@ define(function (require, exports, module) {
 
       return modules;
     },
-    getSortedModules: function () {
+    getSortedModules: function() {
       var modules = this.getModules();
-      var urlModules = [],routeModules=[];
-      modules.forEach(function(obj){
-        obj.url?urlModules.push(obj):routeModules.push(obj);
+      var urlModules = [],
+        routeModules = [];
+      modules.forEach(function(obj) {
+        obj.url ? urlModules.push(obj) : routeModules.push(obj);
       })
 
-      routeModules = _.sortBy(routeModules, function (obj) {
+      routeModules = _.sortBy(routeModules, function(obj) {
         return -obj.originRoute.length;
       });
       modules = routeModules.concat(urlModules);
-      modules.forEach(function(obj){
-        if(obj.children && obj.children.length>1){
-          obj.children = _.sortBy(obj.children, function(child){
-            if(child.route === undefined) child.route="";
+      modules.forEach(function(obj) {
+        if (obj.children && obj.children.length > 1) {
+          obj.children = _.sortBy(obj.children, function(child) {
+            if (child.route === undefined) child.route = "";
             return -child.route.length;
           });
         }
@@ -60,15 +60,15 @@ define(function (require, exports, module) {
       return modules;
     },
 
-    showLoading: function () {
+    showLoading: function() {
       $('.app-loading').addClass('app-loading-show');
     },
 
-    hideLoading: function () {
+    hideLoading: function() {
       $('.app-loading').removeClass('app-loading-show');
     },
 
-    cleanMainArea: function () {
+    cleanMainArea: function() {
       $('body>main').empty();
       $('.bh-bhdialog-container').remove()
     },
@@ -76,7 +76,7 @@ define(function (require, exports, module) {
     /**
      * 生成首页html布局
      */
-    genMainLayout: function () {
+    genMainLayout: function() {
       var layout = '<div id="headerPlaceholder"></div>' +
         '<div class="sc-container-outerFrame">' +
         '<div class="sc-container bh-border-h" bh-container-role="container">' +
@@ -89,13 +89,13 @@ define(function (require, exports, module) {
       $('body').prepend(layout);
     },
 
-    getFixedMainLayout: function () {
-      var layout = '<header></header><main></main><footer></footer>';
+    getFixedMainLayout: function() {
+      var layout = '<header></header><main><div style="color:#fff;font-size:16px;padding: 16px 4px;">您无权限查看或者打开的链接不存在！</div></main><footer></footer>';
 
       $('body').prepend(layout);
     },
 
-    getFirstModules: function () {
+    getFirstModules: function() {
       var modules = this.getModules();
       var appEntry = utils.getConfig('APP_ENTRY');
       if (_.isEmpty(modules)) {
@@ -103,7 +103,7 @@ define(function (require, exports, module) {
       }
 
       // 排除modules中直接配置url的module
-      var firstModule = _.find(modules, function (module) {
+      var firstModule = _.find(modules, function(module) {
         return !module.isOpenNewPage
       });
       return $.trim(appEntry || firstModule.originRoute);
@@ -113,7 +113,7 @@ define(function (require, exports, module) {
      * 渲染头部，专用于简化版框架
      * @return {[type]} [description]
      */
-    renderHeader: function () {
+    renderHeader: function() {
       var headerData = utils.getConfig('HEADER') || {};
       var modules = this.getModules() || [];
       var appEntry = ubaseUtils.getFirstModules();
@@ -130,7 +130,7 @@ define(function (require, exports, module) {
       }
 
       for (var i = 0; i < modules.length; i++) {
-        (function () {
+        (function() {
           var navItem = {
             title: modules[i].title,
             route: modules[i].route || modules[i].url,
@@ -154,13 +154,13 @@ define(function (require, exports, module) {
       }
 
       for (var i = 0; i < nav.length; i++) {
-        if(nav[i].route){
+        if (nav[i].route) {
           if (nav[i].route === (hash || appEntry)) {
             nav[i].active = true;
           }
-        }else{
-          if(nav[i]&&nav[i].children){
-            for(var j = 0; j < nav[i].children.length; j++){
+        } else {
+          if (nav[i] && nav[i].children) {
+            for (var j = 0; j < nav[i].children.length; j++) {
               if ((nav[i].children)[j].route === (hash || appEntry)) {
                 nav[i].active = true;
                 break;
@@ -181,7 +181,7 @@ define(function (require, exports, module) {
         headerData['logo'] = utils.getConfig('RESOURCE_SERVER') + '/fe_components/config_local/logo.png';
       }
 
-      if(useDefaultAvatar === true || useDefaultAvatar === undefined){
+      if (useDefaultAvatar === true || useDefaultAvatar === undefined) {
         if (!headerData['userImage']) {
           headerData['userImage'] = utils.getConfig('RESOURCE_SERVER') + '/images/user.png';
         }
@@ -191,38 +191,38 @@ define(function (require, exports, module) {
         }
       }
       var navItems = headerData.nav;
-      for(var i=0;i<navItems.length;i++){
-        if(navItems[i].children&&navItems[i].children.length){
+      for (var i = 0; i < navItems.length; i++) {
+        if (navItems[i].children && navItems[i].children.length) {
           var children = navItems[i].children;
-          for(var j =0;j < children.length; j++){
-            children[j].href = '#/'+(children[j].originRoute || children[j].url);
+          for (var j = 0; j < children.length; j++) {
+            children[j].href = '#/' + (children[j].originRoute || children[j].url);
             if (children[j].url) {
               var sysIndex = location.href.indexOf('/sys/');
               var origin = location.href.substr(0, sysIndex);
               children[j].href = children[j].url.replace(/\{context\}/, origin);
               if (_.startsWith(children[j].url, 'http://')) {
-                children[j].href =children[j].url;
+                children[j].href = children[j].url;
               }
             }
           }
-          children = _.sortBy(children, function(child){
-              return parseInt(child.range, 10);
+          children = _.sortBy(children, function(child) {
+            return parseInt(child.range, 10);
           });
-          navItems[i].children=children;
+          navItems[i].children = children;
         }
       }
       headerData.nav = navItems;
       $('body').children('header').bhHeader(headerData);
     },
 
-    initFooter: function () {
+    initFooter: function() {
       var text = utils.getConfig('FOOTER_TEXT');
       $('body').children('footer').bhFooter({
         text: text || "版权信息：© 2015 江苏金智教育信息股份有限公司 苏ICP备10204514号"
       });
     },
 
-    setContentMinHeight: function ($setContainer) {
+    setContentMinHeight: function($setContainer) {
       if (!$setContainer) {
         return;
       }
@@ -237,13 +237,13 @@ define(function (require, exports, module) {
       }
     },
 
-    getUserParams: function () {
+    getUserParams: function() {
       var params = {};
       var search = location.search && location.search.substr(1);
 
       if (search) {
         var paramsArr = search.split('&');
-        _.each(paramsArr, function (item) {
+        _.each(paramsArr, function(item) {
           var kv = item.split('=');
           if (kv.length == 2) {
             params[kv[0]] = kv[1];
@@ -254,7 +254,7 @@ define(function (require, exports, module) {
       return params;
     },
 
-    initFramework: function () {
+    initFramework: function() {
       var miniMode = utils.getConfig('MINI_MODE');
       var hideNav = utils.getConfig('HIDE_NAV');
       var headerCount = utils.getConfig('HEADER_COUNT');
@@ -272,7 +272,7 @@ define(function (require, exports, module) {
       ubaseUtils.resetHoganRenderMethod();
       //ubaseUtils.autoRefreshAuthButton();
       utils.setHeaderCount(headerCount);
-      if(hideNav){
+      if (hideNav) {
         $('.bh-headerBar-navigate').hide();
       }
       if (miniMode || userParams['min'] == '1') {
@@ -293,8 +293,8 @@ define(function (require, exports, module) {
       }
       $(".app-ajax-loading").jqxLoader({});
       ubaseUtils.setContentMinHeight($('body').children('main').children('article'));
-      $(function () {
-        $(window).resize(function () {
+      $(function() {
+        $(window).resize(function() {
           //给外层的container添加最小高度
           ubaseUtils.setContentMinHeight($('body').children('main').children('article'));
         });
@@ -302,15 +302,17 @@ define(function (require, exports, module) {
     },
 
     // 封装hogan的render方法 加入国际化的功能， 对render方法添加TEMPLATE_AFTER_RENDER回调
-    resetHoganRenderMethod: function () {
+    resetHoganRenderMethod: function() {
       var templateAfterRender = utils.getConfig('TEMPLATE_AFTER_RENDER');
       var originRender = Hogan.Template.prototype.render;
 
-      Hogan.Template.prototype.render = function (model, partials, indent) {
+      Hogan.Template.prototype.render = function(model, partials, indent) {
         if (model) {
           model.WIS_LABEL = window.WIS_LABEL;
         } else {
-          model = {WIS_LABEL: window.WIS_LABEL};
+          model = {
+            WIS_LABEL: window.WIS_LABEL
+          };
         }
 
         var html = originRender.call(this, model, partials, indent);
@@ -327,7 +329,7 @@ define(function (require, exports, module) {
       }
     },
 
-    initEvaluate: function () {
+    initEvaluate: function() {
       var rootPath = utils.getConfig('APP_INFO_ROOT_PATH');
       var appId = utils.getConfig('APP_ID');
       var ampUserId = sessionStorage.getItem("ampUserId");
@@ -341,7 +343,7 @@ define(function (require, exports, module) {
       });
     },
 
-    initUseApps: function () {
+    initUseApps: function() {
       var rootPath = utils.getConfig('APP_INFO_ROOT_PATH');
       var showUseApps = utils.getConfig('SHOW_USEAPPS');
       var useAppsType = utils.getConfig('USEAPPS_TYPE');
@@ -357,12 +359,12 @@ define(function (require, exports, module) {
       }
     },
 
-    configRouter: function () {
+    configRouter: function() {
       var self = this;
       var preRoute = null;
       router.configure({
         delimiter: '/',
-        after: function () {
+        after: function() {
           var currentModule = self.getCurrentModule();
           var currentRoute = currentModule && currentModule.originRoute;
           if (preRoute == currentRoute) {
@@ -377,7 +379,7 @@ define(function (require, exports, module) {
           $body.children('[bh-footer-role=footer]').removeAttr('style');
           self.setContentMinHeight($body.children('main').children('article'));
           self.reselectHeaderNav();
-          setTimeout(function () {
+          setTimeout(function() {
             $body.children('main').children('article[bh-layout-role=navLeft]').children("section").css("width", "initial");
           }, 10);
           try {
@@ -390,7 +392,7 @@ define(function (require, exports, module) {
       });
     },
 
-    reselectHeaderNav: function () {
+    reselectHeaderNav: function() {
       var currentModule = this.getCurrentModule();
       var modules = this.getModules();
 
@@ -408,22 +410,22 @@ define(function (require, exports, module) {
       });
     },
 
-    getCurrentModule: function () {
+    getCurrentModule: function() {
       var hash = window.location.hash;
       hash = hash.replace('\#\/', '');
       var modules = this.getModules();
       var currentModule = null;
 
       for (var i = 0; i < modules.length; i++) {
-        if(modules[i].children && modules[i].children.length){
+        if (modules[i].children && modules[i].children.length) {
           var children = modules[i].children;
-          for(var j = 0; j< children.length; j++){
+          for (var j = 0; j < children.length; j++) {
             if (_.startsWith(hash + '/', children[j].originRoute + '/')) {
               currentModule = children[j];
               break;
             }
           }
-        }else{
+        } else {
           if (_.startsWith(hash + '/', modules[i].originRoute + '/')) {
             currentModule = modules[i];
             break;
@@ -434,11 +436,11 @@ define(function (require, exports, module) {
       return currentModule;
     },
 
-    resetJqueryHtmlMethod: function () {
+    resetJqueryHtmlMethod: function() {
       $.fn.oldHtmlFn = $.fn.html;
       var self = this;
 
-      $.fn.html = function (content, resetFrameworkHeight) {
+      $.fn.html = function(content, resetFrameworkHeight) {
         var res = null;
         if (content !== undefined) {
           res = $(this).oldHtmlFn(content);
@@ -454,31 +456,31 @@ define(function (require, exports, module) {
       }
     },
 
-    autoRefreshAuthButton: function () {
+    autoRefreshAuthButton: function() {
       var self = this;
-      var debounced = _.debounce(function () {
+      var debounced = _.debounce(function() {
         self.setButtonAuth();
       }, 50);
-      $(document).bind('DOMNodeInserted', function () {
+      $(document).bind('DOMNodeInserted', function() {
         debounced();
       });
-      $(document).bind('DOMNodeRemoved', function () {
+      $(document).bind('DOMNodeRemoved', function() {
         debounced();
       });
     },
 
     // unuse
-    resetJqueryAppendMethod: function () {
+    resetJqueryAppendMethod: function() {
       var self = this;
-      var debounced = _.debounce(function () {
+      var debounced = _.debounce(function() {
         self.setButtonAuth();
       }, 500);
       _.each(['append', 'prepend', 'appendTo', 'prependTo', 'after',
         'before', 'insertAfter', 'insertBefore', 'wrap', 'wrapAll', 'wrapInner', 'replaceAll', 'replaceWith'
-      ], function (method) {
+      ], function(method) {
         $.fn['old' + method + 'Fn'] = $.fn[method];
 
-        $.fn[method] = function (content) {
+        $.fn[method] = function(content) {
           $(this)['old' + method + 'Fn'](content);
           self.setButtonAuth();
           return $(this);
@@ -486,19 +488,19 @@ define(function (require, exports, module) {
       })
     },
 
-    setButtonAuth: function () {
+    setButtonAuth: function() {
       var currentModule = this.getCurrentModule();
       var authControlledButtons = $('[manageAuth="Y"]');
       var buttons = currentModule && currentModule.buttons;
 
-      _.each(authControlledButtons, function (item) {
+      _.each(authControlledButtons, function(item) {
         if (!_.includes(buttons, $(item).attr('data-auth') || $(item).attr('id'))) {
           $(item).remove();
         }
       })
     },
 
-    getIEVersion: function () {
+    getIEVersion: function() {
       var version = null;
       if (navigator.userAgent.indexOf("MSIE") > 0) {
         if (navigator.userAgent.indexOf("MSIE 6.0") > 0) {
