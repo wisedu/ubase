@@ -28,9 +28,20 @@ gulp.task('default', function(cb) {
 	runSequence('serve', cb);
 });
 
+/*
+ * jquery (version 2.1.4)  说明：$ 基本api
+ * jquery.nicescroll (version 3.6.8)  说明：美化滚动条
+ * json2  说明：JSON.stringify、JSON.parse扩写，相当于Polyfill
+ * store (version 2.3.2) 说明：localStorage的封装  https://github.com/jaywcjlove/store.js/blob/HEAD/README-zh.md
+ * director (version 1.2.6) 说明：路由Router
+ * hogan 
+ * lodash (version 3.10.1)
+ * globalize
+ */
+
 gulp.task('mergelib', function() {
 	gulp.src([
-			'./lib/jquery.js',
+			'./lib/jquery.js', 
 			'./lib/jquery.nicescroll.js',
 			'./lib/json2.js',
 			'./lib/store.min.js',

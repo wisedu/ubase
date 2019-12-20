@@ -10,12 +10,15 @@ define(function (require, exports, module) {
       success: function (response) {
         serverConfig = JSON.parse(response);
         // 解决bhHeader组件高亮条在有隐藏项时出现不准的问题  提出人：汪维亮 修改人： 王永建 2018/12/20
-        if(serverConfig.MODULES){
+        if(serverConfig.MODULES || serverConfig.MODULES.length){
           var navs = [],hideNavs = [];
           serverConfig.MODULES.map(function(nav){
             nav.hide?hideNavs.push(nav):navs.push(nav);
           });
           serverConfig.MODULES = navs.concat(hideNavs);
+        } else {
+          // else 部分代码 由曹建军提出 "如果菜单读取的api内容是空的话，提示“未授权，请联系管理员"  修改人：王永建  2019/8/14
+          alert("如果菜单读取的api内容是空的话，提示“未授权，请联系管理员")
         }
       },
       fail: function (status) {

@@ -216,10 +216,8 @@ define(function(require, exports, module) {
     },
 
     initFooter: function() {
-      var text = utils.getConfig('FOOTER_TEXT');
-      $('body').children('footer').bhFooter({
-        text: text || "版权信息：© 2015 江苏金智教育信息股份有限公司 苏ICP备10204514号"
-      });
+      // 应各业务线人员(孟斌、马平、刘弋等)要求，去掉默认值 修改人：wangyongjian 2019/12/20
+      $('body').children('footer').bhFooter({text: utils.getConfig('FOOTER_TEXT')});
     },
 
     setContentMinHeight: function($setContainer) {
