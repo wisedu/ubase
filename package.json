@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "Single page application using jQuery",
   "dependencies": {
-    "gulp-concat": "^2.6.0"
+    "gulp-concat": "^2.6.0",
+    "natives": "^1.1.6"
   },
   "devDependencies": {
     "amd-optimize": "^0.6.1",

@@ -3,3 +3,4 @@ dest/
 .DS_Store
 .idea
 yarn.lock
+app/
