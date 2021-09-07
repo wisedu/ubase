@@ -162,7 +162,8 @@ define(function(require, exports, module) {
                     var myChart = ec.init($elem[0]);
 
                     if (!isNotEmpty) {
-                        $elem.html('<div style="display:table;width:100%;height:100%;"><div class="bh-color-primary-3" style="text-align:center;vertical-align:middle;display:table-cell;"><i class="iconfont" style="font-size:128px;">&#xe62a;</i><br><span class="h3" style="color:#999">暂无数据</span></div></div>');
+                        //2021-9-7 国际化  王敏
+                        $elem.html('<div style="display:table;width:100%;height:100%;"><div class="bh-color-primary-3" style="text-align:center;vertical-align:middle;display:table-cell;"><i class="iconfont" style="font-size:128px;">&#xe62a;</i><br><span class="h3" style="color:#999">'+$.i18n('bh-cd-noDatas')+'</span></div></div>');
                         def.reject(myChart);
                     }
                     myChart.setOption(option);
@@ -185,7 +186,8 @@ define(function(require, exports, module) {
                     var myChart = ec.init($elem[0]);
 
                     if (!isNotEmpty) {
-                        $elem.html('<div style="display:table;width:100%;height:100%;"><div class="bh-color-primary-3" style="text-align:center;vertical-align:middle;display:table-cell;"><i class="iconfont" style="font-size:128px;">&#xe62a;</i><br><span class="h3" style="color:#999">暂无数据</span></div></div>');
+                        //2021-9-7 国际化  王敏
+                        $elem.html('<div style="display:table;width:100%;height:100%;"><div class="bh-color-primary-3" style="text-align:center;vertical-align:middle;display:table-cell;"><i class="iconfont" style="font-size:128px;">&#xe62a;</i><br><span class="h3" style="color:#999">'+$.i18n('bh-cd-noDatas')+'</span></div></div>');
                         def.reject(myChart);
                     }
                     myChart.setOption(option);
@@ -420,7 +422,7 @@ define(function(require, exports, module) {
 
             if (options.okCallback) {
                 var okButtonInfo = {
-                    text: options.okText || '确认',
+                    text: options.okText || $.i18n('bh-edt-confirm'),//2021-9-7 国际化  王敏
 //                     className: okClass,
                     callback: options.okCallback
                 };
@@ -429,7 +431,7 @@ define(function(require, exports, module) {
 
             if (options.cancelCallback) {
                 var cancelButtonInfo = {
-                    text: options.noText || options.cancelText || '取消'
+                    text: options.noText || options.cancelText || $.i18n('bh-edt-cancel')//2021-9-7 国际化  王敏
 //                     className: 'bh-btn-default',
                     // callback: options.cancelCallback
                 };
@@ -438,7 +440,7 @@ define(function(require, exports, module) {
 
             if (options.okCallback && !options.cancelCallback && type == 'confirm') {
                 buttonList.push({
-                    text: options.noText || options.cancelText || '取消'
+                    text: options.noText || options.cancelText || $.i18n('bh-edt-cancel')//2021-9-7 国际化  王敏
 //                     className: 'bh-btn-default'
                 });
             }
