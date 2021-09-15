@@ -49,7 +49,9 @@ gulp.task('mergelib', function() {
 			'./lib/director.min.js',
 			'./lib/hogan-3.0.2.js',
 			'./lib/lodash.min.js',
-			'./lib/globalize.js'
+			'./lib/globalize.js',
+			'./lib/galleria.js',
+			'./lib/galleria.wisedu.js'
 		])
 		.pipe(concat('commonlib-src.js'))
 		.pipe(gulp.dest('dest'))
