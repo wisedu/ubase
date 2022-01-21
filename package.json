@@ -29,7 +29,7 @@
     "gulp-uglify": "^1.5.3",
     "gulp-zip": "^3.2.0",
     "hogan.js": "^3.0.2",
-    "log4js": "^0.6.33",
+    "log4js": "^6.4.0",
     "merge2": "^1.0.1",
     "run-sequence": "^1.1.5"
   },
